@@ -25,7 +25,7 @@ Keep the [CHEATSHEET.md](CHEATSHEET.md) open in another tab. You'll use ~6 comma
 
 ### Step 1 — Clone the repo (copy it to your laptop)
 ```bash
-git clone https://github.com/idanab-png/git-without-the-fear.git
+git clone https://github.com/idan-abraham/git-without-the-fear.git
 cd git-without-the-fear
 ```
 
@@ -72,7 +72,7 @@ resolving one together — it's far less scary than it looks. Instructions are i
 ## Plan B: Fork (if you don't have collaborator access)
 1. Click **Fork** (top-right of this repo) → creates your own copy.
 2. Do Steps 1–5 above using **your fork's** URL.
-3. Open the PR back to `idanab-png/git-without-the-fear`.
+3. Open the PR back to `idan-abraham/git-without-the-fear`.
 
 ---
 
