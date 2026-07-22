@@ -48,6 +48,7 @@ button{margin-top:22px;font-family:'Wix Madefor Display',sans-serif;font-weight:
   box-shadow:0 12px 30px rgba(17,109,255,.35);transition:transform .15s}
 button:hover{transform:translateY(-2px)}
 .emoji{font-size:40px;margin-bottom:10px}
+.tip{margin-top:18px;font-size:12.5px;color:#5B6B80;line-height:1.5}
 </style></head>
 <body>
 <div class="glow g1"></div><div class="glow g2"></div>
@@ -57,6 +58,7 @@ button:hover{transform:translateY(-2px)}
   <p>This game is restricted to <b>@wix.com</b> accounts.</p>
   <p>You're signed in as <span class="email">${email.replace(/[<>&"]/g, '')}</span>, which isn't a Wix account.</p>
   <button id="switch" type="button">Sign in with a Wix account →</button>
+  <p class="tip">Keeps signing you in with the same account? Google is auto-signing your personal account. Open an <b>incognito window</b> (or switch your Google account), then sign in with your <b>@wix.com</b> login.</p>
 </div>
 <script>
   // The Wix runtime forbids top-level POST form navigations, so log out via
