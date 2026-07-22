@@ -56,10 +56,17 @@ button:hover{transform:translateY(-2px)}
   <h1>Wix employees only</h1>
   <p>This game is restricted to <b>@wix.com</b> accounts.</p>
   <p>You're signed in as <span class="email">${email.replace(/[<>&"]/g, '')}</span>, which isn't a Wix account.</p>
-  <form method="POST" action="/api/auth/logout?returnToUrl=/">
-    <button type="submit">Sign in with a Wix account →</button>
-  </form>
+  <button id="switch" type="button">Sign in with a Wix account →</button>
 </div>
+<script>
+  // The Wix runtime forbids top-level POST form navigations, so log out via
+  // fetch (same-origin, allowed), then re-enter login forcing an account prompt.
+  document.getElementById('switch').addEventListener('click', async function () {
+    this.disabled = true; this.textContent = 'Switching…';
+    try { await fetch('/api/auth/logout?returnToUrl=/', { method: 'POST', credentials: 'include' }); } catch (e) {}
+    location.href = '/api/auth/login?prompt=login&returnToUrl=/';
+  });
+</script>
 </body></html>`;
   return new Response(html, { status: 403, headers: { 'content-type': 'text/html; charset=utf-8' } });
 }
