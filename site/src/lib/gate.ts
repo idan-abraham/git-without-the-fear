@@ -43,10 +43,10 @@ h1{font-family:'Wix Madefor Display',sans-serif;font-size:26px;margin:0 0 12px}
 p{color:#9FB0C3;line-height:1.55;margin:0 0 8px;font-size:15px}
 .email{font-family:'JetBrains Mono',monospace;color:#FF9B9B;background:rgba(255,107,107,.1);
   border:1px solid rgba(255,107,107,.3);border-radius:8px;padding:2px 8px;font-size:13px}
-button{margin-top:22px;font-family:'Wix Madefor Display',sans-serif;font-weight:700;font-size:14px;
+a.btn{display:inline-block;margin-top:22px;text-decoration:none;font-family:'Wix Madefor Display',sans-serif;font-weight:700;font-size:14px;
   background:var(--accent);color:#fff;border:none;border-radius:11px;padding:13px 24px;cursor:pointer;
   box-shadow:0 12px 30px rgba(17,109,255,.35);transition:transform .15s}
-button:hover{transform:translateY(-2px)}
+a.btn:hover{transform:translateY(-2px)}
 .emoji{font-size:40px;margin-bottom:10px}
 .tip{margin-top:18px;font-size:12.5px;color:#5B6B80;line-height:1.5}
 </style></head>
@@ -57,18 +57,9 @@ button:hover{transform:translateY(-2px)}
   <h1>Wix employees only</h1>
   <p>This game is restricted to <b>@wix.com</b> accounts.</p>
   <p>You're signed in as <span class="email">${email.replace(/[<>&"]/g, '')}</span>, which isn't a Wix account.</p>
-  <button id="switch" type="button">Sign in with a Wix account →</button>
-  <p class="tip">Keeps signing you in with the same account? Google is auto-signing your personal account. Open an <b>incognito window</b> (or switch your Google account), then sign in with your <b>@wix.com</b> login.</p>
+  <a class="btn" href="/signout">Sign out →</a>
+  <p class="tip">To sign in as <b>@wix.com</b>: after signing out, open an <b>incognito window</b> or switch your Google account (Google may auto-sign your personal one).</p>
 </div>
-<script>
-  // The Wix runtime forbids top-level POST form navigations, so log out via
-  // fetch (same-origin, allowed), then re-enter login forcing an account prompt.
-  document.getElementById('switch').addEventListener('click', async function () {
-    this.disabled = true; this.textContent = 'Switching…';
-    try { await fetch('/api/auth/logout?returnToUrl=/', { method: 'POST', credentials: 'include' }); } catch (e) {}
-    location.href = '/api/auth/login?prompt=login&returnToUrl=/';
-  });
-</script>
 </body></html>`;
   return new Response(html, { status: 403, headers: { 'content-type': 'text/html; charset=utf-8' } });
 }
