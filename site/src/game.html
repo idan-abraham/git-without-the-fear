@@ -562,13 +562,16 @@ window.GIT=makeEngine();
       hint(r){
         const A=r.branches['timeline-a'],B=r.branches['timeline-b'];
         const sa=A?E.snap(r,A)['scratch.txt']:undefined,sb=B?E.snap(r,B)['scratch.txt']:undefined;
+        const head=E.headSnap(r),dirty=r.workdir['scratch.txt']!==head['scratch.txt'];
         if(A===undefined)return 'Make your first branch:  git checkout -b timeline-a';
-        if(sa===undefined&&r.HEAD==='timeline-a')return 'Save a version here:  echo "I am on TIMELINE A" > scratch.txt  →  git add scratch.txt  →  git commit -m "A"';
-        if(sa===undefined)return 'Switch to it (git checkout timeline-a), then create scratch.txt, git add, git commit.';
-        if(B===undefined)return 'Start the second timeline from main:  git checkout main  →  git checkout -b timeline-b';
-        if(sb===undefined&&r.HEAD==='timeline-b')return 'Give this one its OWN version:  echo "I am on TIMELINE B" > scratch.txt  →  git add scratch.txt  →  git commit -m "B"';
-        if(sb===undefined)return 'Switch to timeline-b and commit its own scratch.txt (echo > , git add, git commit).';
-        return 'Now hop between them and watch scratch.txt change:  git checkout timeline-a  …  git checkout timeline-b';
+        if(sa===undefined)return (r.HEAD==='timeline-a'
+          ? (dirty?'Save it:  git add scratch.txt  →  git commit -m "A"'
+                  :'Give timeline-a a version:  echo "I am on TIMELINE A" > scratch.txt  →  git add scratch.txt  →  git commit -m "A"')
+          : 'Switch back:  git checkout timeline-a, then create + commit scratch.txt there.');
+        if(B===undefined)return 'Now the second timeline:  git checkout -b timeline-b  (it copies timeline-a — expected; you will give it its own version next)';
+        if(r.HEAD==='timeline-b'&&dirty)return 'Commit so timeline-b gets its OWN version:  git add scratch.txt  →  git commit -m "B"';
+        if(sa===sb)return 'Both timelines say the same thing. On timeline-b, make it different:  echo "I am on TIMELINE B" > scratch.txt  →  git add scratch.txt  →  git commit -m "B"';
+        return 'Now hop and watch scratch.txt change:  git checkout timeline-a  …  git checkout timeline-b';
       },
       goals(r){
         const A=r.branches['timeline-a'],B=r.branches['timeline-b'];
