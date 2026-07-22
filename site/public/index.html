@@ -18,6 +18,7 @@
   --body:'Wix Madefor Text',system-ui,sans-serif;
   --mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
   --ease:cubic-bezier(.16,1,.3,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -136,10 +137,10 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 .pr .merge[disabled]{background:var(--panel-2);color:var(--muted);cursor:not-allowed}
 
 /* overlays */
-.ov{position:fixed;inset:0;z-index:50;background:rgba(4,7,13,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px}
-.ov.show{display:flex}
-.card{max-width:560px;width:100%;background:var(--panel);border:1px solid var(--line-2);border-radius:20px;padding:34px 34px 30px;box-shadow:0 40px 100px rgba(0,0,0,.6);animation:pop .5s var(--ease)}
-@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(4,7,13,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .34s var(--ease),visibility .34s,background .34s,backdrop-filter .34s}
+.ov.show{opacity:1;visibility:visible;pointer-events:auto;background:rgba(4,7,13,.86);backdrop-filter:blur(6px)}
+.card{max-width:560px;width:100%;background:var(--panel);border:1px solid var(--line-2);border-radius:20px;padding:34px 34px 30px;box-shadow:0 40px 100px rgba(0,0,0,.6);opacity:0;transform:translateY(26px) scale(.96);transition:opacity .4s var(--ease) .06s,transform .5s var(--spring) .06s}
+.ov.show .card{opacity:1;transform:none}
 .card .eye{font-family:var(--disp);font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-light);margin-bottom:12px}
 .card h2{font-size:clamp(24px,4vw,32px);font-weight:800;margin-bottom:14px}
 .card .fear,.card .truth{font-size:14px;line-height:1.55;padding:12px 15px;border-radius:11px;margin-bottom:9px}
@@ -169,6 +170,38 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px}
 ::-webkit-scrollbar-track{background:transparent}
+
+/* ---------------- motion ---------------- */
+/* screen entrance: the two panes ease up on every level load (context switch) */
+@keyframes screenIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.pane.enter{animation:screenIn .5s var(--ease) both}
+.pane.enter.d2{animation-delay:.08s}
+/* terminal lines slide in as they print (feedback) */
+@keyframes lnin{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.termout .ln{animation:lnin .2s var(--ease) both}
+/* goal completes: checkbox springs, row flashes green (reward) */
+@keyframes gkpop{0%{transform:scale(1)}45%{transform:scale(1.5)}100%{transform:scale(1)}}
+@keyframes goalflash{0%{background:rgba(63,185,80,0)}28%{background:rgba(63,185,80,.16)}100%{background:rgba(63,185,80,0)}}
+.goals li.pop{animation:goalflash .8s ease-out;border-radius:8px}
+.goals li.pop .gk{animation:gkpop .42s var(--spring)}
+/* new commit node pops into the graph (reward) */
+@keyframes nodePop{0%{transform:scale(0);opacity:0}62%{transform:scale(1.28)}100%{transform:scale(1);opacity:1}}
+.gnode.new{animation:nodePop .45s var(--spring) both;transform-box:fill-box;transform-origin:center}
+/* button + pip press feedback */
+.btn,.hbtn,.tactions button,.pr .merge{transition:transform .14s var(--ease),background .2s,border-color .2s,box-shadow .2s,color .2s}
+.btn:active,.hbtn:active,.tactions button:active,.pr .merge:active,.copy:active{transform:scale(.95)}
+.lvpip{transition:transform .28s var(--spring),background .2s,border-color .2s,color .2s}
+.lvpip.cur{transform:scale(1.08)}
+.lvpip:not(.locked):active{transform:scale(.92)}
+@keyframes pipdone{0%{transform:scale(0)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
+.lvpip.done::after{animation:pipdone .42s var(--spring)}
+/* ambient: background glows breathe (life) */
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.36}50%{transform:scale(1.14);opacity:.5}}
+.bgfx .glow{animation:breathe 12s ease-in-out infinite}
+.bgfx .g2{animation-duration:16s;animation-delay:2s}
+/* confetti overlay */
+#confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -214,6 +247,8 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
     </div>
   </div>
 </div>
+
+<canvas id="confetti"></canvas>
 
 <!-- start -->
 <div class="ov show" id="start"><div class="card">
@@ -659,18 +694,21 @@ window.GIT=makeEngine();
   ];
 
   // ---- state ----
-  let repo,cur=0,history=[],hIdx=0;
+  let repo,cur=0,history=[],hIdx=0,prevGoalDone=[],prevGraphIds=new Set();
   const out=$('#out'),cmd=$('#cmd');
 
   function loadLevel(i){
     cur=i;
     repo=E.createRepo();
     LEVELS[i].setup(repo);
+    prevGoalDone=[];prevGraphIds=new Set(reachable(repo)); // starting nodes are not "new"
     out.innerHTML='';
     printSys("Level "+(i+1)+" — "+LEVELS[i].title);
     printSys('Type "help" for the command list, or hit 💡 Hint any time.');
     renderAll();
     $('#prPanel').className='pr';$('#prPanel').innerHTML='';
+    // screen entrance: replay the pane ease-in on every level load
+    document.querySelectorAll('.stage .pane').forEach(function(p,idx){p.classList.remove('enter','d2');void p.offsetWidth;p.classList.add('enter');if(idx>0)p.classList.add('d2');});
     cmd.focus();
   }
 
@@ -704,7 +742,10 @@ window.GIT=makeEngine();
   function renderHead(){$('#headBadge').textContent='HEAD → '+repo.HEAD;$('#objTitle').innerHTML=LEVELS[cur].emoji+' '+esc(LEVELS[cur].title);$('#objDesc').innerHTML=LEVELS[cur].obj;}
   function renderGoals(){
     const gs=LEVELS[cur].goals(repo);const ul=$('#goals');ul.innerHTML='';
-    gs.forEach(g=>{const li=document.createElement('li');if(g.done)li.className='done';li.innerHTML='<span class="gk"></span>'+esc(g.label);ul.appendChild(li);});
+    gs.forEach((g,i)=>{const li=document.createElement('li');if(g.done)li.className='done';
+      if(g.done&&!prevGoalDone[i])li.classList.add('pop'); // just completed → spring + flash
+      li.innerHTML='<span class="gk"></span>'+esc(g.label);ul.appendChild(li);});
+    prevGoalDone=gs.map(g=>g.done);
   }
   function renderFiles(){
     const st=E.status(repo);const list=$('#fileList');list.innerHTML='';
@@ -744,8 +785,8 @@ window.GIT=makeEngine();
     ids.forEach(id=>{const c=r.commits[id];[c.parent,c.parent2].forEach(p=>{if(p&&depth[p]!==undefined){s+='<path class="gedge" d="M'+X(p)+','+Y(p)+' C'+((X(p)+X(id))/2)+','+Y(p)+' '+((X(p)+X(id))/2)+','+Y(id)+' '+X(id)+','+Y(id)+'"/>';}});});
     // nodes
     const t=E.tip(r);
-    ids.forEach(id=>{const c=r.commits[id];const on=id===t;const merge=!!c.parent2;
-      s+='<circle class="gnode'+(on?' on':'')+(merge?' merge':'')+'" cx="'+X(id)+'" cy="'+Y(id)+'" r="11"/>';
+    ids.forEach(id=>{const c=r.commits[id];const on=id===t;const merge=!!c.parent2;const isNew=!prevGraphIds.has(id);
+      s+='<circle class="gnode'+(on?' on':'')+(merge?' merge':'')+(isNew?' new':'')+'" cx="'+X(id)+'" cy="'+Y(id)+'" r="11"/>';
       s+='<text class="glabel" x="'+X(id)+'" y="'+(Y(id)+26)+'" text-anchor="middle">'+esc(id.slice(0,5))+'</text>';
       s+='<text class="gmsg" x="'+X(id)+'" y="'+(Y(id)-18)+'" text-anchor="middle">'+esc(c.message.length>16?c.message.slice(0,15)+'…':c.message)+'</text>';
     });
@@ -757,6 +798,7 @@ window.GIT=makeEngine();
       s+='<g class="gbranch"><rect x="'+bx+'" y="'+(by-13)+'" width="'+w+'" height="20" rx="6" fill="'+(on?'rgba(17,109,255,.2)':'rgba(91,107,128,.14)')+'" stroke="'+(on?'#4C8DFF':'#2A3A52')+'"/><text x="'+(bx+9)+'" y="'+(by+1)+'" fill="'+(on?'#7AABFF':'#9FB0C3')+'">'+esc(label)+'</text></g>';
     });
     svg.innerHTML=s;
+    prevGraphIds=new Set(ids); // subsequent renders only pop genuinely new commits
   }
 
   function renderPR(){
@@ -778,6 +820,24 @@ window.GIT=makeEngine();
     };
   }
 
+  // ---- confetti (hand-rolled canvas burst, no dependency) ----
+  var _cc=document.getElementById('confetti'),_ctx=_cc.getContext('2d');
+  function fireConfetti(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const W=_cc.width=innerWidth,H=_cc.height=innerHeight;
+    const colors=['#116DFF','#4C8DFF','#7AABFF','#3FB950','#A371F7','#F5A623'],parts=[];
+    for(let i=0;i<150;i++){const a=Math.random()*Math.PI*2,sp=4+Math.random()*8;
+      parts.push({x:W/2,y:H*0.4,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-6,g:.22+Math.random()*.12,
+        s:5+Math.random()*6,r:Math.random()*Math.PI,vr:(Math.random()*2-1)*.35,c:colors[i%colors.length]});}
+    let f=0;
+    (function tick(){f++;_ctx.clearRect(0,0,W,H);let alive=false;
+      for(const p of parts){p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(p.y<H+30)alive=true;
+        _ctx.save();_ctx.translate(p.x,p.y);_ctx.rotate(p.r);_ctx.globalAlpha=Math.max(0,1-f/130);
+        _ctx.fillStyle=p.c;_ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.55);_ctx.restore();}
+      if(alive&&f<135)requestAnimationFrame(tick);else _ctx.clearRect(0,0,W,H);
+    })();
+  }
+
   // ---- win ----
   let winning=false;
   function checkWin(){
@@ -795,6 +855,7 @@ window.GIT=makeEngine();
     const isLast=cur===LEVELS.length-1;
     $('#wNext').textContent=isLast?'Finish the quest 🕶️':'Next level →';
     show('#win');
+    fireConfetti();
   }
 
   // ---- level pips ----
@@ -840,7 +901,7 @@ window.GIT=makeEngine();
   $('#btnStart').onclick=()=>{const s=store.get();s.max=0;s.done={};store.set(s);winning=false;hideOv();openBrief(0);};
   $('#btnContinue').onclick=()=>{const s=store.get();winning=false;hideOv();openBrief(Math.min(s.max,LEVELS.length-1));};
   $('#bGo').onclick=()=>{hideOv();winning=false;loadLevel(cur);};
-  $('#wNext').onclick=()=>{winning=false;if(cur===LEVELS.length-1){show('#fin');}else{openBrief(cur+1);}};
+  $('#wNext').onclick=()=>{winning=false;if(cur===LEVELS.length-1){show('#fin');fireConfetti();}else{openBrief(cur+1);}};
   $('#finReplay').onclick=()=>{const s=store.get();s.max=0;s.done={};store.set(s);winning=false;hideOv();openBrief(0);};
 
   // boot
