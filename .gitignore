@@ -1,1 +1,8 @@
 .DS_Store
+node_modules/
+dist/
+.astro/
+.env
+.env.local
+*.log
+.wix/
