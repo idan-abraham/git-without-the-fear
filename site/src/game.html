@@ -895,7 +895,7 @@ window.GIT=makeEngine();
   document.querySelectorAll('.tactions [data-fill]').forEach(b=>b.onclick=()=>{cmd.value=b.dataset.fill;cmd.focus();});
   $('#btnHint').onclick=()=>{printLines([{t:'💡 '+LEVELS[cur].hint(repo),c:'hint'}]);scroll();};
   $('#btnReset').onclick=()=>{winning=false;loadLevel(cur);};
-  $('#btnHandbook').onclick=$('#finHandbook').onclick=()=>window.open('handbook.html','_blank');
+  $('#btnHandbook').onclick=$('#finHandbook').onclick=()=>window.open('/handbook','_blank');
 
   // ---- start/win buttons ----
   $('#btnStart').onclick=()=>{const s=store.get();s.max=0;s.done={};store.set(s);winning=false;hideOv();openBrief(0);};
