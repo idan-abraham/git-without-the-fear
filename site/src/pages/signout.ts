@@ -57,4 +57,4 @@ a.btn:hover{transform:translateY(-2px)}
 </body></html>`;
 
 export const GET: APIRoute = async () =>
-  new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
+  new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' } });

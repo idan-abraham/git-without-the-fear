@@ -13,7 +13,9 @@ export async function checkAccess(): Promise<Access> {
   let email: string | undefined;
   try {
     const { member } = await members.getCurrentMember({ fieldsets: ['FULL'] });
-    email = member?.loginEmail?.toLowerCase();
+    // Reject an explicitly-unverified login email (an unverified email+password
+    // signup could otherwise claim x@wix.com). SSO logins are verified.
+    if (member?.loginEmailVerified !== false) email = member?.loginEmail?.toLowerCase();
   } catch {
     /* anonymous / members not resolvable → treat as logged out */
   }
@@ -73,7 +75,7 @@ a.cta:hover{transform:translateY(-3px)}
   <p class="note reveal d4">🔒 Wix employees only. Sign in with your <b>@wix.com</b> Google account.</p>
 </div>
 </body></html>`;
-  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' } });
 }
 
 // Signed in, but not a @wix.com account → styled 403 with a "switch account" action.
@@ -115,5 +117,5 @@ a.btn:hover{transform:translateY(-2px)}
   <p class="tip">To sign in as <b>@wix.com</b>: after signing out, open an <b>incognito window</b> or switch your Google account (Google may auto-sign your personal one).</p>
 </div>
 </body></html>`;
-  return new Response(html, { status: 403, headers: { 'content-type': 'text/html; charset=utf-8' } });
+  return new Response(html, { status: 403, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' } });
 }

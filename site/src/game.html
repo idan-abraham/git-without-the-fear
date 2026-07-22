@@ -11,7 +11,7 @@
 :root{
   --bg:#070A10; --panel:#0E141F; --panel-2:#111A28; --ink:#0D1117;
   --line:#1E2A3C; --line-2:#2A3A52;
-  --text:#E6EDF3; --text-2:#9FB0C3; --muted:#5B6B80;
+  --text:#E6EDF3; --text-2:#9FB0C3; --muted:#8496AD;
   --accent:#116DFF; --accent-2:#4C8DFF; --accent-light:#7AABFF; --glow:rgba(17,109,255,.35);
   --green:#3FB950; --amber:#F5A623; --danger:#FF6B6B; --purple:#A371F7;
   --disp:'Wix Madefor Display',system-ui,sans-serif;
@@ -36,12 +36,12 @@ button{font-family:var(--disp);cursor:pointer}
 
 /* shell */
 #app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;max-width:1360px;margin:0 auto}
-header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line)}
+header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:14px 22px;border-bottom:1px solid var(--line)}
 .brand{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.01em;display:flex;align-items:center;gap:9px}
 .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--glow)}
 .brand small{color:var(--muted);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:10.5px}
 .levels{display:flex;gap:7px;margin-left:8px}
-.lvpip{width:30px;height:30px;border-radius:9px;border:1px solid var(--line-2);background:var(--panel);color:var(--text-2);font-family:var(--mono);font-size:12px;font-weight:700;display:grid;place-items:center;position:relative;transition:.2s}
+.lvpip{width:30px;height:30px;padding:0;border-radius:9px;border:1px solid var(--line-2);background:var(--panel);color:var(--text-2);font-family:var(--mono);font-size:12px;font-weight:700;display:grid;place-items:center;position:relative;transition:.2s}
 .lvpip.done{border-color:var(--green);color:var(--green)}
 .lvpip.cur{border-color:var(--accent);color:#fff;background:var(--accent);box-shadow:0 0 14px var(--glow)}
 .lvpip.locked{opacity:.4}
@@ -113,7 +113,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 .termout .sys{color:var(--accent-light)}
 .terminput{display:flex;align-items:center;gap:9px;border-top:1px solid var(--line);padding:11px 18px;background:var(--panel)}
 .terminput .p{font-family:var(--mono);color:var(--green);font-size:13px;font-weight:700}
-.terminput input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-family:var(--mono);font-size:13px}
+.terminput input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:var(--mono);font-size:16px}
 .terminput input::placeholder{color:var(--muted)}
 .tactions{display:flex;gap:8px;padding:0 18px 14px;background:var(--panel)}
 .tactions button{background:transparent;border:1px solid var(--line-2);color:var(--text-2);font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:8px;transition:.2s}
@@ -228,7 +228,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
         <div class="od" id="objDesc"></div>
         <ul class="goals" id="goals"></ul>
       </div>
-      <div class="graphwrap"><svg id="graph" width="100%" height="240"></svg></div>
+      <div class="graphwrap"><svg id="graph" width="100%" height="240" aria-hidden="true"></svg></div>
       <div class="files">
         <div class="h">Working directory</div>
         <div id="fileList"></div>
@@ -238,9 +238,9 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
     <div class="pane">
       <div class="panehead">Terminal <span class="b mono" id="cwd">~/git-without-the-fear</span></div>
       <div class="term">
-        <div class="termout" id="out"></div>
+        <div class="termout" id="out" role="log" aria-live="polite" aria-label="Terminal output" tabindex="0"></div>
         <div class="pr" id="prPanel"></div>
-        <div class="terminput"><span class="p">$</span><input id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a git command… (try: git status)"></div>
+        <div class="terminput"><span class="p" aria-hidden="true">$</span><input id="cmd" aria-label="Terminal command input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a git command… (try: git status)"></div>
         <div class="tactions">
           <button data-fill="git status">git status</button>
           <button data-fill="git log --oneline">git log</button>
@@ -254,7 +254,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 <canvas id="confetti"></canvas>
 
 <!-- start -->
-<div class="ov show" id="start"><div class="card">
+<div class="ov show" id="start" role="dialog" aria-modal="true" aria-label="Start the quest"><div class="card">
   <div class="confetti">🎮</div>
   <h1>Git Without<br>the <span class="strike">Fear</span> Quest</h1>
   <p>Five levels. Each one is a Git moment people dread: a branch, a conflict, a runaway branch, a pull request. You beat it by typing <b>real git commands</b> in a safe, simulated repo.</p>
@@ -270,7 +270,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 </div></div>
 
 <!-- briefing -->
-<div class="ov" id="brief"><div class="card">
+<div class="ov" id="brief" role="dialog" aria-modal="true" aria-label="Level briefing"><div class="card">
   <div class="eye" id="bEye">Level</div>
   <h2 id="bTitle"></h2>
   <div class="fear" id="bFear"></div>
@@ -280,7 +280,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 </div></div>
 
 <!-- win -->
-<div class="ov" id="win"><div class="card">
+<div class="ov" id="win" role="dialog" aria-modal="true" aria-label="Level cleared"><div class="card">
   <div class="confetti" id="wEmoji">🏆</div>
   <div class="eye">Level cleared</div>
   <h2 id="wTitle"></h2>
@@ -289,7 +289,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 </div></div>
 
 <!-- finish -->
-<div class="ov" id="fin"><div class="card" style="text-align:center">
+<div class="ov" id="fin" role="dialog" aria-modal="true" aria-label="Quest complete"><div class="card" style="text-align:center">
   <div class="confetti">🕶️</div>
   <div class="eye">Quest complete</div>
   <h2>You're fearless now.</h2>
@@ -321,6 +321,7 @@ function makeEngine(){
       remote:{},           // branch -> pushed commit id
       pr:null,             // {open, headPushed, state, addressed, merged, msgs:[]}
       visited:new Set(['main']),
+      switched:new Set(), // branches switched TO via a real (non-create) checkout
       _n:0,
     };
   }
@@ -346,7 +347,7 @@ function makeEngine(){
   function commit(r,message,parent2){
     const parent=tip(r);
     const id=sha(message+'|'+parent+'|'+(++r._n));
-    r.commits[id]={id,message,parent:parent||null,parent2:parent2||null,snapshot:clone(r.stage),branch:r.HEAD};
+    r.commits[id]={id,message,parent:parent||null,parent2:parent2||null,snapshot:clone(r.stage),branch:r.HEAD,n:r._n};
     r.branches[r.HEAD]=id;
     return id;
   }
@@ -400,7 +401,7 @@ function makeEngine(){
         const st=status(r);
         if(r.merging){say('You have unmerged paths.','out');say('  (fix conflicts and run "git commit")','cm');}
         if(st.conflicts.length){say('Unmerged paths:','out');st.conflicts.forEach(f=>say('  both modified:   '+f,'err'));}
-        if(st.staged.length){say('Changes to be committed:','out');st.staged.forEach(f=>say('  new file:   '+f,'ok'));}
+        if(st.staged.length){const hs=headSnap(r);say('Changes to be committed:','out');st.staged.forEach(f=>say('  '+(hs[f]!==undefined?'modified:':'new file:')+'   '+f,'ok'));}
         if(st.modified.length){say('Changes not staged for commit:','out');st.modified.forEach(f=>say('  modified:   '+f,'hint'));}
         if(st.untracked.length){say('Untracked files:','out');st.untracked.forEach(f=>say('  '+f,'cm'));}
         if(!st.conflicts.length&&!st.staged.length&&!st.modified.length&&!st.untracked.length)say('nothing to commit, working tree clean','ok');
@@ -420,7 +421,9 @@ function makeEngine(){
         const st=status(r);
         if(create){
           if(r.branches[name]!==undefined){say("fatal: a branch named '"+name+"' already exists",'err');return{lines:L};}
-          r.branches[name]=tip(r);r.order.push(name);r.HEAD=name;r.visited.add(name);
+          const sp=args[2];let base=tip(r);
+          if(sp!==undefined){ if(r.branches[sp]===undefined){say("fatal: '"+sp+"' is not a branch; cannot create '"+name+"' from it",'err');return{lines:L};} base=r.branches[sp];r.workdir=clone(snap(r,base));r.stage=clone(snap(r,base)); }
+          r.branches[name]=base;r.order.push(name);r.HEAD=name;r.visited.add(name);
           say("Switched to a new branch '"+name+"'",'ok');return{lines:L};
         }
         if(r.branches[name]===undefined){say("error: pathspec '"+name+"' did not match any branch",'err');return{lines:L};}
@@ -434,13 +437,13 @@ function makeEngine(){
             if(r.workdir[f]!==h[f]){if(r.workdir[f]===undefined)delete nw[f];else nw[f]=r.workdir[f];}
             if(r.stage[f]!==h[f]){if(r.stage[f]===undefined)delete ns[f];else ns[f]=r.stage[f];}
           }
-          r.workdir=nw;r.stage=ns;r.HEAD=name;r.visited.add(name);
+          r.workdir=nw;r.stage=ns;r.HEAD=name;r.visited.add(name);r.switched.add(name);
         }
         say("Switched to branch '"+name+"'",'ok');return{lines:L};
       }
       case 'add':{
         if(!args[0]){say('Nothing specified. Use "git add <file>" or "git add ."','err');return{lines:L};}
-        const targets=args[0]==='.'?Object.keys(r.workdir):[args[0]];
+        const targets=args[0]==='.'?Object.keys(r.workdir):args;
         for(const f of targets){
           if(r.workdir[f]===undefined&&args[0]!=='.'){say("fatal: pathspec '"+f+"' did not match any files",'err');return{lines:L};}
           r.stage[f]=r.workdir[f];
@@ -465,14 +468,15 @@ function makeEngine(){
       case 'log':{
         const oneline=args.includes('--oneline');
         const branch=args.find(a=>a!=='--oneline'&&r.branches[a]!==undefined);
-        let id=branch?r.branches[branch]:tip(r);
-        if(!id){say('(no commits yet)','cm');return{lines:L};}
-        let count=0;
-        while(id&&count<20){const c=r.commits[id];
-          if(oneline)say(id.slice(0,7)+' '+c.message,'out');
-          else{say('commit '+id,'hint');say('    '+c.message);}
-          id=c.parent;count++;
-        }
+        const start=branch?r.branches[branch]:tip(r);
+        if(!start){say('(no commits yet)','cm');return{lines:L};}
+        // walk BOTH parents so merged-in history is visible, newest first
+        const seen=new Set(),stack=[start];
+        while(stack.length){const c=stack.pop();if(!c||seen.has(c))continue;seen.add(c);const co=r.commits[c];if(co.parent)stack.push(co.parent);if(co.parent2)stack.push(co.parent2);}
+        [...seen].map(id=>r.commits[id]).sort((a,b)=>b.n-a.n).slice(0,30).forEach(c=>{
+          if(oneline)say(c.id.slice(0,7)+' '+c.message,'out');
+          else{say('commit '+c.id,'hint');say('    '+c.message);}
+        });
         return{lines:L};
       }
       case 'merge':{
@@ -481,7 +485,7 @@ function makeEngine(){
         if(r.branches[other]===undefined){say("merge: '"+other+"' - not a branch",'err');return{lines:L};}
         if(r.merging){say('A merge is already in progress.','err');return{lines:L};}
         const ours=tip(r),theirs=r.branches[other];
-        if(ours===theirs){say('Already up to date.','out');return{lines:L};}
+        if(ours===theirs||ancestors(r,ours).has(theirs)){say('Already up to date.','out');return{lines:L};}
         if(ancestors(r,theirs).has(ours)){ // fast-forward
           r.branches[r.HEAD]=theirs;r.workdir=clone(snap(r,theirs));r.stage=clone(snap(r,theirs));say('Fast-forward to '+theirs.slice(0,7),'ok');return{lines:L};
         }
@@ -579,7 +583,7 @@ window.GIT=makeEngine();
         const A=r.branches['timeline-a'],B=r.branches['timeline-b'];
         const sa=A?E.snap(r,A)['scratch.txt']:undefined;
         const sb=B?E.snap(r,B)['scratch.txt']:undefined;
-        const sw=r.visited.has('timeline-a')&&r.visited.has('timeline-b');
+        const sw=r.switched.has('timeline-a')&&r.switched.has('timeline-b'); // must actually hop, not just create
         return[
           {label:'timeline-a has its own scratch.txt',done:sa!==undefined},
           {label:'timeline-b has its own scratch.txt',done:sb!==undefined},
@@ -715,7 +719,7 @@ window.GIT=makeEngine();
     $('#prPanel').className='pr';$('#prPanel').innerHTML='';
     // screen entrance: replay the pane ease-in on every level load
     document.querySelectorAll('.stage .pane').forEach(function(p,idx){p.classList.remove('enter','d2');void p.offsetWidth;p.classList.add('enter');if(idx>0)p.classList.add('d2');});
-    cmd.focus();
+    if(!document.querySelector('.ov.show'))cmd.focus(); // don't steal focus behind an open overlay
   }
 
   function printSys(t){const d=document.createElement('div');d.className='ln';d.innerHTML='<span class="sys"># '+esc(t)+'</span>';out.appendChild(d);scroll();}
@@ -764,7 +768,7 @@ window.GIT=makeEngine();
       else if(st.untracked.includes(f)){cls='untracked';lbl='untracked';}
       else if(st.modified.includes(f)){cls='modified';lbl='modified';}
       const row=document.createElement('div');row.className='file';
-      row.innerHTML='<span class="nm">'+esc(f)+'</span>'+(lbl?'<span class="badge '+cls+'">'+lbl+'</span>':'')+'<span class="peek">cat ›</span>';
+      row.innerHTML='<span class="nm">'+esc(f)+'</span>'+(lbl?'<span class="badge '+cls+'">'+lbl+'</span>':'')+'<button type="button" class="peek" aria-label="Show contents of '+esc(f)+'">cat ›</button>';
       row.querySelector('.peek').onclick=()=>{cmd.value='cat '+f;submit();};
       list.appendChild(row);
     });
@@ -867,12 +871,14 @@ window.GIT=makeEngine();
   // ---- level pips ----
   function renderLevels(){
     const s=store.get();const c=$('#levels');c.innerHTML='';
-    LEVELS.forEach((L,i)=>{const p=document.createElement('div');p.className='lvpip';
+    LEVELS.forEach((L,i)=>{const p=document.createElement('button');p.type='button';p.className='lvpip';
       if(s.done[L.key])p.classList.add('done');
       if(i===cur)p.classList.add('cur');
       if(i>s.max&&!s.done[L.key])p.classList.add('locked');
       p.textContent=i+1;p.title=L.title;
-      if(!p.classList.contains('locked'))p.onclick=()=>{winning=false;openBrief(i);};
+      p.setAttribute('aria-label','Level '+(i+1)+': '+L.title+(s.done[L.key]?' (cleared)':''));
+      if(p.classList.contains('locked'))p.disabled=true;
+      else p.onclick=()=>{winning=false;openBrief(i);};
       c.appendChild(p);});
   }
 
@@ -886,9 +892,20 @@ window.GIT=makeEngine();
     show('#brief');
   }
 
-  // ---- overlays ----
-  function show(sel){document.querySelectorAll('.ov').forEach(o=>o.classList.remove('show'));$(sel).classList.add('show');}
-  function hideOv(){document.querySelectorAll('.ov').forEach(o=>o.classList.remove('show'));}
+  // ---- overlays (focus move + Tab trap; these are flow gates, so no Escape-to-close) ----
+  var trapHandler=null;
+  function focusables(ov){return [...ov.querySelectorAll('button:not([disabled]),a[href],input,[tabindex]:not([tabindex="-1"])')].filter(el=>el.offsetParent!==null);}
+  function show(sel){
+    document.querySelectorAll('.ov').forEach(o=>o.classList.remove('show'));
+    const ov=$(sel);ov.classList.add('show');
+    var f=focusables(ov);if(f.length)requestAnimationFrame(()=>f[0].focus());
+    if(trapHandler)document.removeEventListener('keydown',trapHandler);
+    trapHandler=function(e){if(e.key!=='Tab')return;var g=focusables(ov);if(!g.length)return;var a=g[0],z=g[g.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}};
+    document.addEventListener('keydown',trapHandler);
+  }
+  function hideOv(){document.querySelectorAll('.ov').forEach(o=>o.classList.remove('show'));if(trapHandler){document.removeEventListener('keydown',trapHandler);trapHandler=null;}}
 
   // ---- input ----
   function submit(){const v=cmd.value.trim();if(!v)return;history.push(v);hIdx=history.length;run(v);cmd.value='';}
