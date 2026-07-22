@@ -42,7 +42,7 @@ a.btn:hover{transform:translateY(-2px)}
   <div id="done" class="hide">
     <div class="emoji">👋</div>
     <h1>You're signed out</h1>
-    <p>Come back any time — the quest will be here.</p>
+    <p>Come back any time. The quest will be here.</p>
     <a class="btn" href="/api/auth/login?returnToUrl=/">Sign in again →</a>
     <p class="tip">Switching accounts? Open an <b>incognito window</b> or change your Google account, then sign in with <b>@wix.com</b>.</p>
   </div>

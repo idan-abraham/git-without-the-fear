@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Git Without the Fear — Terminal Quest</title>
+<title>Git Without the Fear: Terminal Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;600;700;800&family=Wix+Madefor+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -50,6 +50,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 .top .right{margin-left:auto;display:flex;gap:10px;align-items:center}
 .hbtn{background:var(--panel);border:1px solid var(--line-2);color:var(--text-2);font-size:12.5px;font-weight:700;padding:8px 13px;border-radius:9px;transition:.2s}
 .hbtn:hover{border-color:var(--accent);color:#fff}
+.hbtn.on{border-color:var(--accent);color:#fff;background:rgba(17,109,255,.16)}
 
 /* body columns */
 .stage{flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:0;min-height:0}
@@ -212,6 +213,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
     <div class="brand"><span class="dot"></span> Git Without the Fear <small>Terminal Quest</small></div>
     <div class="levels" id="levels"></div>
     <div class="right">
+      <button class="hbtn" id="btnMusic" title="Toggle chiptune music">🎵 Music</button>
       <button class="hbtn" id="btnHandbook" title="Open the text handbook">📖 Handbook</button>
       <button class="hbtn" id="btnReset">↺ Reset level</button>
       <button class="hbtn" onclick="location.href='/signout'" title="Sign out">⇥ Sign out</button>
@@ -255,7 +257,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
 <div class="ov show" id="start"><div class="card">
   <div class="confetti">🎮</div>
   <h1>Git Without<br>the <span class="strike">Fear</span> Quest</h1>
-  <p>Five levels. Each one is a real Git moment people dread — a branch, a conflict, a runaway branch, a pull request. You beat it by typing <b>real git commands</b> in a safe, simulated repo.</p>
+  <p>Five levels. Each one is a Git moment people dread: a branch, a conflict, a runaway branch, a pull request. You beat it by typing <b>real git commands</b> in a safe, simulated repo.</p>
   <div class="chips">
     <span class="chip">⌨️ real commands, zero risk</span>
     <span class="chip">🗺️ watch the branch map</span>
@@ -291,7 +293,7 @@ header.top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bot
   <div class="confetti">🕶️</div>
   <div class="eye">Quest complete</div>
   <h2>You're fearless now.</h2>
-  <p style="color:var(--text-2);font-size:15px;line-height:1.6;margin:14px 0 0">You triggered and resolved every scary Git moment with your own hands — branches, staging, a merge conflict, a runaway branch, and a pull-request conversation. It was never a monster. Just a handful of commands and a few plain words.</p>
+  <p style="color:var(--text-2);font-size:15px;line-height:1.6;margin:14px 0 0">You triggered and resolved every scary Git moment with your own hands: branches, staging, a merge conflict, a runaway branch, and a pull-request conversation. It was never a monster. Just a handful of commands and a few plain words.</p>
   <div class="btnrow" style="justify-content:center">
     <button class="btn" id="finReplay">Play again</button>
     <button class="btn ghost" id="finHandbook">📖 Keep the handbook</button>
@@ -528,7 +530,7 @@ function makeEngine(){
           {who:'you',text:'Opened pull request: "'+(r.commits[t]?r.commits[t].message:'my change')+'"'},
           {who:'rev',text:'Nice start! Can you add an emoji to the end of your line? 🙂',diff:null},
         ]};}
-        else if(!first){r.pr.headPushed=t;r.pr.state='appr';r.pr.addressed=true;r.pr.msgs.push({who:'you',text:'Pushed a new commit to address the review.'});r.pr.msgs.push({who:'rev',text:'Looks great — thank you! Approved ✅'});}
+        else if(!first){r.pr.headPushed=t;r.pr.state='appr';r.pr.addressed=true;r.pr.msgs.push({who:'you',text:'Pushed a new commit to address the review.'});r.pr.msgs.push({who:'rev',text:'Looks great, thank you! Approved ✅'});}
         return{lines:L,pr:true};
       }
       default: say("git: '"+sub+"' is not a command this quest knows. Try: help",'err');return{lines:L};
@@ -556,8 +558,8 @@ window.GIT=makeEngine();
     {
       key:1,eye:'Level 1 · The reframe',title:'A branch is not a folder',emoji:'🗂️',
       fear:'"When I make a branch, where does the folder go? And why did my files change when I switched?"',
-      truth:'A branch makes NO new folder. You stay in one folder — Git swaps what\'s inside the files to match the branch you\'re on.',
-      obj:'Make two branches — <b>timeline-a</b> and <b>timeline-b</b> — each with its own version of <b>scratch.txt</b>, then switch between them and watch the same file change in place.',
+      truth:'A branch makes NO new folder. You stay in one folder. Git swaps what\'s inside the files to match the branch you\'re on.',
+      obj:'Make two branches, <b>timeline-a</b> and <b>timeline-b</b>, each with its own version of <b>scratch.txt</b>, then switch between them and watch the same file change in place.',
       setup(r){ E.exec(r,'echo "# project" > README.md');E.exec(r,'git add .');E.exec(r,'git commit -m "start"'); },
       hint(r){
         const A=r.branches['timeline-a'],B=r.branches['timeline-b'];
@@ -568,7 +570,7 @@ window.GIT=makeEngine();
           ? (dirty?'Save it:  git add scratch.txt  →  git commit -m "A"'
                   :'Give timeline-a a version:  echo "I am on TIMELINE A" > scratch.txt  →  git add scratch.txt  →  git commit -m "A"')
           : 'Switch back:  git checkout timeline-a, then create + commit scratch.txt there.');
-        if(B===undefined)return 'Now the second timeline:  git checkout -b timeline-b  (it copies timeline-a — expected; you will give it its own version next)';
+        if(B===undefined)return 'Now the second timeline:  git checkout -b timeline-b  (it copies timeline-a; you will give it its own version next)';
         if(r.HEAD==='timeline-b'&&dirty)return 'Commit so timeline-b gets its OWN version:  git add scratch.txt  →  git commit -m "B"';
         if(sa===sb)return 'Both timelines say the same thing. On timeline-b, make it different:  echo "I am on TIMELINE B" > scratch.txt  →  git add scratch.txt  →  git commit -m "B"';
         return 'Now hop and watch scratch.txt change:  git checkout timeline-a  …  git checkout timeline-b';
@@ -581,15 +583,15 @@ window.GIT=makeEngine();
         return[
           {label:'timeline-a has its own scratch.txt',done:sa!==undefined},
           {label:'timeline-b has its own scratch.txt',done:sb!==undefined},
-          {label:'switched between both — and the two versions differ',done:sw&&sa!==undefined&&sb!==undefined&&sa!==sb}
+          {label:'switched between both, and the two versions differ',done:sw&&sa!==undefined&&sb!==undefined&&sa!==sb}
         ];
       },
-      recap:['One folder, two <b>timelines</b> — no new folder ever appeared.','<b>Switching a branch</b> rewrote scratch.txt in place.','Your other branch was safe the whole time.']
+      recap:['One folder, two <b>timelines</b>. No new folder ever appeared.','<b>Switching a branch</b> rewrote scratch.txt in place.','Your other branch was safe the whole time.']
     },
     {
-      key:2,eye:'Level 2 · Control',title:'Staging — choose what goes in',emoji:'🎛️',
-      fear:'"Why two steps — add then commit? And if an agent edits 8 files, how do I save only the part I want?"',
-      truth:'git add is you CURATING the next snapshot — not everything you touched. It turns a messy folder into one clean save point.',
+      key:2,eye:'Level 2 · Control',title:'Staging: choose what goes in',emoji:'🎛️',
+      fear:'"Why two steps, add then commit? And if an agent edits 8 files, how do I save only the part I want?"',
+      truth:'git add is you CURATING the next snapshot, not everything you touched. It turns a messy folder into one clean save point.',
       obj:'Create <b>keep-me.txt</b> and <b>not-ready.txt</b>. Stage and commit <b>only keep-me.txt</b>, leaving not-ready.txt behind.',
       setup(r){ E.exec(r,'echo "# project" > README.md');E.exec(r,'git add .');E.exec(r,'git commit -m "start"');E.exec(r,'git checkout -b staging-drill'); },
       hint(r){
@@ -598,7 +600,7 @@ window.GIT=makeEngine();
         if(w['not-ready.txt']===undefined)return 'And the half-finished one:  echo "TODO: not ready" > not-ready.txt';
         if(h['keep-me.txt']===undefined)return 'Stage ONLY keep-me.txt (not "git add ."):  git add keep-me.txt   then   git commit -m "Add the finished change"';
         if(h['not-ready.txt']!==undefined)return 'not-ready.txt got committed too. Hit "Reset level" and this time stage only keep-me.txt.';
-        return 'Nice — run git status. not-ready.txt should still be waiting, uncommitted.';
+        return 'Nice. Run git status: not-ready.txt should still be waiting, uncommitted.';
       },
       goals(r){
         const h=E.headSnap(r);
@@ -607,7 +609,7 @@ window.GIT=makeEngine();
         const g3=r.workdir['not-ready.txt']!==undefined;
         return[{label:'keep-me.txt is committed',done:g1},{label:'not-ready.txt was left OUT of the commit',done:g1&&g2},{label:'not-ready.txt still waiting in your folder',done:g3}];
       },
-      recap:['<b>git add</b> chose what went in — the messy file stayed out.','One commit, one clean purpose.','<span class="n">Tip:</span> git add . stages everything when you do want it all.']
+      recap:['<b>git add</b> chose what went in; the messy file stayed out.','One commit, one clean purpose.','<span class="n">Tip:</span> git add . stages everything when you do want it all.']
     },
     {
       key:3,eye:'Level 3 · The monster',title:'The pull conflict',emoji:'💥',
@@ -624,11 +626,11 @@ window.GIT=makeEngine();
       },
       hint(r){
         const t=E.tip(r),c=r.commits[t];
-        if(c&&c.parent2)return 'Merge complete — you resolved it. 🎉';
+        if(c&&c.parent2)return 'Merge complete. You resolved it. 🎉';
         if(r.merging){
           const stillMarked=r.merging.conflicts.some(f=>(r.workdir[f]||'').includes(E.CONFLICT));
-          if(stillMarked)return 'Resolve it — keep both is easiest:  echo "The best snack is: pizza AND sushi" > snack.txt';
-          return 'Markers gone — now finish the merge:  git add snack.txt   then   git commit -m "Keep both"';
+          if(stillMarked)return 'Resolve it. Keep both is easiest:  echo "The best snack is: pizza AND sushi" > snack.txt';
+          return 'Markers gone. Now finish the merge:  git add snack.txt   then   git commit -m "Keep both"';
         }
         return 'Pull main\'s version in to trigger the conflict:  git merge main   (Freaking out later? git merge --abort undoes it, safely.)';
       },
@@ -645,7 +647,7 @@ window.GIT=makeEngine();
     {
       key:4,eye:'Level 4 · The trap',title:'The giant branch',emoji:'🐘',
       fear:'"One branch, two weeks, everything piled in. Nobody wants to review it and I can\'t ship any part alone."',
-      truth:'One branch = one thing. You\'re never stuck — you can peel the ready piece onto a fresh, small branch and ship that today.',
+      truth:'One branch = one thing. You\'re never stuck: peel the ready piece onto a fresh, small branch and ship that today.',
       obj:'<b>everything-branch</b> has 3 unrelated commits. Make a fresh branch <b>ready-copy-fix</b> from main and <b>cherry-pick only the copy commit</b> onto it.',
       setup(r){
         E.exec(r,'echo "readme" > README.md');E.exec(r,'git add .');E.exec(r,'git commit -m "base"');
@@ -658,9 +660,9 @@ window.GIT=makeEngine();
         const rc=r.branches['ready-copy-fix'];
         if(rc===undefined)return 'Get the copy commit\'s id:  git log everything-branch --oneline. Then start clean:  git checkout main  →  git checkout -b ready-copy-fix';
         const s=E.snap(r,rc);
-        if(s['experiment.txt']!==undefined||s['bugfix.txt']!==undefined)return 'Too much came along — the bugfix/experiment are here too. Redo it cleanly:  git checkout main  →  git branch -D ready-copy-fix  →  git checkout -b ready-copy-fix  →  git cherry-pick <copy-id>  (ONLY the "Change homepage copy" one).';
+        if(s['experiment.txt']!==undefined||s['bugfix.txt']!==undefined)return 'Too much came along: the bugfix/experiment are here too. Redo it cleanly:  git checkout main  →  git branch -D ready-copy-fix  →  git checkout -b ready-copy-fix  →  git cherry-pick <copy-id>  (ONLY the "Change homepage copy" one).';
         if(s['copy.txt']===undefined)return 'Copy just that one commit across:  git cherry-pick <the-copy-id>   (id from: git log everything-branch --oneline)';
-        return 'Check it:  git log --oneline — only the copy fix should be here, no bugfix/experiment. 🎉';
+        return 'Check it:  git log --oneline shows only the copy fix, no bugfix/experiment. 🎉';
       },
       goals(r){
         const b=r.branches['ready-copy-fix'];const s=b?E.snap(r,b):null;
@@ -674,8 +676,8 @@ window.GIT=makeEngine();
     {
       key:5,eye:'Level 5 · The unlock',title:'A PR is a conversation',emoji:'💬',
       fear:'"I left a comment on GitHub but didn\'t get that it lives ON a branch\'s changes. I think in conversations, not branches."',
-      truth:'A PR IS a conversation — a comment thread attached to the actual change. You reply by pushing another commit. You already do this in Docs and Figma.',
-      obj:'Push <b>pr-convo-drill</b> to open a PR. The reviewer asks for a tweak — <b>answer with a new commit</b>, push again, then <b>Merge</b> the PR.',
+      truth:'A PR IS a conversation: a comment thread attached to the actual change. You reply by pushing another commit. You already do this in Docs and Figma.',
+      obj:'Push <b>pr-convo-drill</b> to open a PR. The reviewer asks for a tweak, so <b>answer with a new commit</b>, push again, then <b>Merge</b> the PR.',
       setup(r){
         E.exec(r,'echo "# The Wall" > wall.md');E.exec(r,'git add .');E.exec(r,'git commit -m "base"');
         E.exec(r,'git checkout -b pr-convo-drill');
@@ -684,16 +686,16 @@ window.GIT=makeEngine();
         const t=E.tip(r);
         if(!r.pr){
           if(r.commits[t]&&r.commits[t].message==='base')return 'Add your line + commit:  echo "- your name was here" >> wall.md  →  git add wall.md  →  git commit -m "Add my line"';
-          return 'Open the PR — send your branch up:  git push';
+          return 'Open the PR. Send your branch up:  git push';
         }
         if(!r.pr.addressed)return 'The reviewer wants an emoji. Add a line + commit, then push again:  echo "- me was here 🎉" >> wall.md  →  git add wall.md  →  git commit -m "Add emoji"  →  git push';
         if(!r.pr.merged)return 'Approved! Click the green "Merge pull request" button in the PR panel below.';
-        return 'Merged — the whole conversation stays attached to history forever. 🎉';
+        return 'Merged. The whole conversation stays attached to history forever. 🎉';
       },
       goals(r){
         return[{label:'opened the PR (git push)',done:!!(r.pr&&r.pr.open)},{label:'answered the review with a new commit + push',done:!!(r.pr&&r.pr.addressed)},{label:'merged the pull request',done:!!(r.pr&&r.pr.merged)}];
       },
-      recap:['The comment lived <b>on your changed line</b> — not lost in Slack.','You replied by <b>pushing another commit</b>; the PR updated itself.','Being "on a branch" is what the conversation is about.']
+      recap:['The comment lived <b>on your changed line</b>, not lost in Slack.','You replied by <b>pushing another commit</b>; the PR updated itself.','Being "on a branch" is what the conversation is about.']
     }
   ];
 
@@ -707,7 +709,7 @@ window.GIT=makeEngine();
     LEVELS[i].setup(repo);
     prevGoalDone=[];prevGraphIds=new Set(reachable(repo)); // starting nodes are not "new"
     out.innerHTML='';
-    printSys("Level "+(i+1)+" — "+LEVELS[i].title);
+    printSys("Level "+(i+1)+": "+LEVELS[i].title);
     printSys('Type "help" for the command list, or hit 💡 Hint any time.');
     renderAll();
     $('#prPanel').className='pr';$('#prPanel').innerHTML='';
@@ -754,7 +756,7 @@ window.GIT=makeEngine();
   function renderFiles(){
     const st=E.status(repo);const list=$('#fileList');list.innerHTML='';
     const files=Object.keys(repo.workdir).sort();
-    if(!files.length){list.innerHTML='<div class="emptyfiles">— empty —</div>';return;}
+    if(!files.length){list.innerHTML='<div class="emptyfiles">empty</div>';return;}
     files.forEach(f=>{
       let cls='',lbl='';
       if(st.conflicts.includes(f)){cls='conflict';lbl='conflict';}
@@ -771,7 +773,7 @@ window.GIT=makeEngine();
   function reachable(r){const seen=new Set();for(const b in r.branches){let id=r.branches[b];const st=[id];while(st.length){const c=st.pop();if(!c||seen.has(c))continue;seen.add(c);const co=r.commits[c];if(co.parent)st.push(co.parent);if(co.parent2)st.push(co.parent2);}}return[...seen];}
   function renderGraph(){
     const svg=$('#graph');const r=repo;const ids=reachable(r);
-    if(!ids.length){svg.innerHTML='<text x="16" y="30" class="gmsg">No commits yet — make your first one.</text>';svg.setAttribute('height',60);return;}
+    if(!ids.length){svg.innerHTML='<text x="16" y="30" class="gmsg">No commits yet. Make your first one.</text>';svg.setAttribute('height',60);return;}
     // depth (x)
     const depth={};function d(id){if(id in depth)return depth[id];const c=r.commits[id];let dp=0;if(c.parent)dp=Math.max(dp,d(c.parent)+1);if(c.parent2)dp=Math.max(dp,d(c.parent2)+1);return depth[id]=dp;}
     ids.forEach(d);
@@ -810,7 +812,7 @@ window.GIT=makeEngine();
     el.className='pr show';
     const stCls=pr.merged?'merged':(pr.state==='appr'?'appr':'req');
     const stTxt=pr.merged?'Merged':(pr.state==='appr'?'Approved':'Changes requested');
-    let msgs='';pr.msgs.forEach(m=>{msgs+='<div class="msg '+(m.who==='rev'?'rev':'you')+'"><span class="av">'+(m.who==='rev'?'🧑‍🔧':'🙂')+'</span><div><b>'+(m.who==='rev'?'Reviewer':'You')+'</b> — '+esc(m.text)+'</div></div>';});
+    let msgs='';pr.msgs.forEach(m=>{msgs+='<div class="msg '+(m.who==='rev'?'rev':'you')+'"><span class="av">'+(m.who==='rev'?'🧑‍🔧':'🙂')+'</span><div><b>'+(m.who==='rev'?'Reviewer':'You')+'</b>: '+esc(m.text)+'</div></div>';});
     el.innerHTML='<div class="h">🔀 PR: pr-convo-drill → main <span class="st '+stCls+'">'+stTxt+'</span></div>'+
       '<div class="thread">'+msgs+'</div>'+
       '<button class="merge" '+((pr.state==='appr'&&!pr.merged)?'':'disabled')+'>'+(pr.merged?'✓ Merged':'Merge pull request')+'</button>';
@@ -854,7 +856,7 @@ window.GIT=makeEngine();
     renderLevels();
     const L=LEVELS[cur];
     $('#wEmoji').textContent=L.emoji;
-    $('#wTitle').textContent=L.title+' — cleared!';
+    $('#wTitle').textContent=L.title+' · cleared!';
     $('#wRecap').innerHTML=L.recap.map(x=>'<li><span class="n">✓</span><div>'+x+'</div></li>').join('');
     const isLast=cur===LEVELS.length-1;
     $('#wNext').textContent=isLast?'Finish the quest 🕶️':'Next level →';
@@ -913,6 +915,48 @@ window.GIT=makeEngine();
   if(s.max>0||Object.keys(s.done).length){$('#btnContinue').classList.remove('hidden');}else{$('#btnContinue').classList.add('hidden');}
   renderLevels();
   loadLevel(0); // prime the panels behind the start overlay
+})();
+</script>
+
+<script>
+/* Chiptune — off by default. Self-contained Web Audio (no file, no network).
+   Starts only on the user's click, so it respects browser autoplay rules.
+   Square-wave lead + soft triangle bass looping a I–V–vi–IV progression in C. */
+(function(){
+  var btn=document.getElementById('btnMusic'); if(!btn) return;
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC){ btn.style.display='none'; return; }
+  // 32 steps ~ 4.8s loop. 0 = rest.
+  var LEAD=[659,0,784,0, 1047,988,784,659, 880,0,784,0, 659,587,659,0,
+            784,0,988,0, 1319,1175,988,784, 1047,0,880,0, 784,659,587,0];
+  var BASS=[131,131,0,0, 98,98,0,0, 110,110,0,0, 87,87,0,0,
+            131,131,0,0, 98,98,0,0, 110,110,0,0, 87,87,0,0];
+  var STEP=0.15, actx=null, master=null, timer=null, step=0, nextTime=0, on=false;
+  function note(t,f,dur,type,vol){ if(!f) return;
+    var o=actx.createOscillator(), g=actx.createGain();
+    o.type=type; o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.03);
+  }
+  function tick(){ // lookahead scheduler
+    while(nextTime < actx.currentTime + 0.2){
+      note(nextTime, LEAD[step], STEP*0.9, 'square', 0.07);
+      note(nextTime, BASS[step], STEP*0.95, 'triangle', 0.06);
+      step=(step+1)%LEAD.length; nextTime+=STEP;
+    }
+  }
+  function start(){
+    if(!actx){ actx=new AC(); master=actx.createGain(); master.connect(actx.destination); }
+    master.gain.value=0.6; if(actx.state==='suspended') actx.resume();
+    step=0; nextTime=actx.currentTime+0.06; tick(); timer=setInterval(tick,60);
+  }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; } if(master) master.gain.value=0; }
+  btn.addEventListener('click',function(){
+    on=!on;
+    if(on){ start(); btn.classList.add('on'); btn.textContent='🎵 Music ♪'; }
+    else  { stop();  btn.classList.remove('on'); btn.textContent='🎵 Music'; }
+  });
 })();
 </script>
 </body>

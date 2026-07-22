@@ -26,7 +26,7 @@ export async function checkAccess(): Promise<Access> {
 export function welcomePage(): Response {
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Git Without the Fear — Terminal Quest</title>
+<title>Git Without the Fear: Terminal Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -67,10 +67,10 @@ a.cta:hover{transform:translateY(-3px)}
 <div class="wrap">
   <span class="kicker reveal">Git Without the Fear · Terminal Quest</span>
   <h1 class="reveal d1">Learn Git by <span class="strike">fear</span> playing.</h1>
-  <p class="lead reveal d2">Five bite-size levels. You type <b>real git commands</b> in a safe, simulated repo — branch, commit, resolve a conflict, cherry-pick, open a PR — and watch the branch map react. No setup, nothing to break.</p>
+  <p class="lead reveal d2">Five bite-size levels. You type <b>real git commands</b> in a safe, simulated repo (branch, commit, resolve a conflict, cherry-pick, open a PR) and watch the branch map react. No setup, nothing to break.</p>
   <div class="chips reveal d3"><span>⌨️ real commands</span><span>🗺️ live branch map</span><span>🎮 5 levels</span><span>🛟 zero risk</span></div>
   <a class="cta reveal d4" href="/api/auth/login?returnToUrl=/">Sign in to play →</a>
-  <p class="note reveal d4">🔒 Wix employees only — sign in with your <b>@wix.com</b> Google account.</p>
+  <p class="note reveal d4">🔒 Wix employees only. Sign in with your <b>@wix.com</b> Google account.</p>
 </div>
 </body></html>`;
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
