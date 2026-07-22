@@ -69,6 +69,15 @@ resolving one together — it's far less scary than it looks. Instructions are i
 
 ---
 
+## 🧪 Scenario drills — feel the problem, then fix it
+Once the basic loop feels comfortable, the [`drills/`](drills/) folder recreates the
+*real* confusions people hit — branch-vs-folder, staging, pull conflicts, the
+two-week giant branch, and the PR-as-conversation. Each one triggers the scary
+thing on purpose (safely) and walks you back out. All doable solo. Start at
+[`drills/README.md`](drills/README.md).
+
+---
+
 ## Plan B: Fork (if you don't have collaborator access)
 1. Click **Fork** (top-right of this repo) → creates your own copy.
 2. Do Steps 1–5 above using **your fork's** URL.
