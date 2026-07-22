@@ -2,11 +2,14 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
-// GET so a plain link/button works (the Wix runtime forbids top-level POST form
-// navigations). Clears the wixSession cookie, then shows a signed-out page.
+// A GET landing page (plain link/button navigations work; top-level POST form
+// navigations are blocked by the Wix runtime). On load it calls Wix's OWN
+// logout endpoint via fetch — which IS allowed and clears the session state
+// correctly — then shows a signed-out confirmation. We do NOT hand-clear the
+// cookie ourselves; doing so left Wix's session inconsistent and broke re-login.
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Signed out</title>
+<title>Signing out…</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -27,23 +30,31 @@ a.btn{display:inline-block;margin-top:22px;text-decoration:none;font-family:'Wix
 a.btn:hover{transform:translateY(-2px)}
 .emoji{font-size:40px;margin-bottom:10px}
 .tip{margin-top:16px;font-size:12.5px;color:#5B6B80;line-height:1.5}
+.hide{display:none}
+.spin{display:inline-block;width:26px;height:26px;border:3px solid #2A3A52;border-top-color:var(--accent);
+  border-radius:50%;animation:s 1s linear infinite;margin-bottom:6px}
+@keyframes s{to{transform:rotate(360deg)}}
 </style></head>
 <body>
 <div class="glow g1"></div><div class="glow g2"></div>
 <div class="card">
-  <div class="emoji">👋</div>
-  <h1>You're signed out</h1>
-  <p>Come back any time — the quest will be here.</p>
-  <a class="btn" href="/api/auth/login?prompt=login&returnToUrl=/">Sign in again →</a>
-  <p class="tip">Switching accounts? Open an <b>incognito window</b> or change your Google account, then sign in with <b>@wix.com</b>.</p>
+  <div id="busy"><div class="spin"></div><h1>Signing you out…</h1><p>One moment.</p></div>
+  <div id="done" class="hide">
+    <div class="emoji">👋</div>
+    <h1>You're signed out</h1>
+    <p>Come back any time — the quest will be here.</p>
+    <a class="btn" href="/api/auth/login?returnToUrl=/">Sign in again →</a>
+    <p class="tip">Switching accounts? Open an <b>incognito window</b> or change your Google account, then sign in with <b>@wix.com</b>.</p>
+  </div>
 </div>
+<script>
+  (async function () {
+    try { await fetch('/api/auth/logout?returnToUrl=/', { method: 'POST', credentials: 'include' }); } catch (e) {}
+    document.getElementById('busy').classList.add('hide');
+    document.getElementById('done').classList.remove('hide');
+  })();
+</script>
 </body></html>`;
 
 export const GET: APIRoute = async () =>
-  new Response(html, {
-    status: 200,
-    headers: {
-      'content-type': 'text/html; charset=utf-8',
-      'set-cookie': 'wixSession=; Path=/; Max-Age=0; Secure; SameSite=None',
-    },
-  });
+  new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
