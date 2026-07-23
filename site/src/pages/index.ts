@@ -1,12 +1,9 @@
 import type { APIRoute } from 'astro';
-import gameHtml from '../game.html?raw';
-import { checkAccess, deniedPage, welcomePage } from '../lib/gate';
+import homeHtml from '../home.html?raw';
 
-export const prerender = false; // must run per-request so the gate is enforced
+export const prerender = false;
 
-export const GET: APIRoute = async () => {
-  const a = await checkAccess();
-  if (a.status === 'anon') return welcomePage();       // branded landing + "sign in to play"
-  if (a.status === 'denied') return deniedPage(a.email);
-  return new Response(gameHtml, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' } });
-};
+// Public home chooser: presentation or game. Both destinations (/deck, /play)
+// enforce the @wix.com login gate themselves, so this landing needs no auth.
+export const GET: APIRoute = async () =>
+  new Response(homeHtml, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' } });
