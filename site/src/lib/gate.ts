@@ -45,6 +45,13 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#070A1
 .kicker{display:inline-block;font-family:'Wix Madefor Display',sans-serif;font-weight:700;font-size:12px;
   letter-spacing:.18em;text-transform:uppercase;color:#7AABFF;border:1px solid rgba(122,171,255,.35);
   border-radius:999px;padding:6px 16px;margin-bottom:26px}
+.wixmark{display:inline-block;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);border-radius:7px;
+  padding:6px 12px;margin-bottom:22px;line-height:1;
+  color:#3B82F6;animation:wixhue 4s linear infinite!important}
+.wixmark span{display:inline-block;animation:wixwave 1.8s ease-in-out infinite!important}
+@keyframes wixhue{to{filter:hue-rotate(360deg)}}
+@keyframes wixwave{0%,55%,100%{transform:scale(1)}28%{transform:scale(1.6)}}
 h1{font-family:'Wix Madefor Display',sans-serif;font-weight:800;line-height:1.03;letter-spacing:-.02em;
   font-size:clamp(38px,7vw,68px);margin:0;background:linear-gradient(120deg,#fff 25%,#7AABFF 68%,#116DFF);
   -webkit-background-clip:text;background-clip:text;color:transparent}
@@ -67,6 +74,7 @@ a.cta:hover{transform:translateY(-3px)}
 <body>
 <div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
 <div class="wrap">
+  <div class="wixmark"><span style="animation-delay:0s">W</span><span style="animation-delay:.05s">i</span><span style="animation-delay:.1s">x</span><span style="animation-delay:.15s">&nbsp;</span><span style="animation-delay:.2s">C</span><span style="animation-delay:.25s">r</span><span style="animation-delay:.3s">e</span><span style="animation-delay:.35s">a</span><span style="animation-delay:.4s">t</span><span style="animation-delay:.45s">o</span><span style="animation-delay:.5s">r</span><span style="animation-delay:.55s">s</span></div>
   <span class="kicker reveal">Git Without the Fear · Terminal Quest</span>
   <h1 class="reveal d1">Learn Git by <span class="strike">fear</span> playing.</h1>
   <p class="lead reveal d2">Five bite-size levels. You type <b>real git commands</b> in a safe, simulated repo (branch, commit, resolve a conflict, cherry-pick, open a PR) and watch the branch map react. No setup, nothing to break.</p>
@@ -103,12 +111,20 @@ a.btn{display:inline-block;margin-top:22px;text-decoration:none;font-family:'Wix
   background:var(--accent);color:#fff;border:none;border-radius:11px;padding:13px 24px;cursor:pointer;
   box-shadow:0 12px 30px rgba(17,109,255,.35);transition:transform .15s}
 a.btn:hover{transform:translateY(-2px)}
+.wixmark{display:inline-block;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);border-radius:7px;
+  padding:6px 12px;margin-bottom:20px;line-height:1;
+  color:#3B82F6;animation:wixhue 4s linear infinite!important}
+.wixmark span{display:inline-block;animation:wixwave 1.8s ease-in-out infinite!important}
+@keyframes wixhue{to{filter:hue-rotate(360deg)}}
+@keyframes wixwave{0%,55%,100%{transform:scale(1)}28%{transform:scale(1.6)}}
 .emoji{font-size:40px;margin-bottom:10px}
 .tip{margin-top:18px;font-size:12.5px;color:#5B6B80;line-height:1.5}
 </style></head>
 <body>
 <div class="glow g1"></div><div class="glow g2"></div>
 <div class="card">
+  <div class="wixmark"><span style="animation-delay:0s">W</span><span style="animation-delay:.05s">i</span><span style="animation-delay:.1s">x</span><span style="animation-delay:.15s">&nbsp;</span><span style="animation-delay:.2s">C</span><span style="animation-delay:.25s">r</span><span style="animation-delay:.3s">e</span><span style="animation-delay:.35s">a</span><span style="animation-delay:.4s">t</span><span style="animation-delay:.45s">o</span><span style="animation-delay:.5s">r</span><span style="animation-delay:.55s">s</span></div>
   <div class="emoji">🔒</div>
   <h1>Wix employees only</h1>
   <p>This game is restricted to <b>@wix.com</b> accounts.</p>

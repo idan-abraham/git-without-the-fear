@@ -40,6 +40,10 @@ header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:
 .brand{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.01em;display:flex;align-items:center;gap:9px}
 .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--glow)}
 .brand small{color:var(--muted);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:10.5px}
+.wixmark{display:inline-block;font-family:var(--disp);font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);padding:5px 10px;border-radius:7px;line-height:1;white-space:nowrap;color:#3B82F6;animation:wixhue 4s linear infinite!important}
+.wixmark span{display:inline-block;animation:wixwave 1.8s ease-in-out infinite!important}
+@keyframes wixhue{to{filter:hue-rotate(360deg)}}
+@keyframes wixwave{0%,55%,100%{transform:scale(1)}28%{transform:scale(1.6)}}
 .levels{display:flex;gap:7px;margin-left:8px}
 .lvpip{width:30px;height:30px;padding:0;border-radius:9px;border:1px solid var(--line-2);background:var(--panel);color:var(--text-2);font-family:var(--mono);font-size:12px;font-weight:700;display:grid;place-items:center;position:relative;transition:.2s}
 .lvpip.done{border-color:var(--green);color:var(--green)}
@@ -155,6 +159,15 @@ header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:
 .btn.ghost{background:transparent;border:1px solid var(--line-2);color:var(--text-2);box-shadow:none}
 .btn.ghost:hover{border-color:var(--accent);color:#fff}
 .confetti{font-size:44px;margin-bottom:8px}
+.card .wixmark{display:block;width:max-content;margin:0 auto 14px}
+.hacker{font-family:var(--mono);font-size:13.5px;color:var(--green);background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);border-left:3px solid var(--green);border-radius:9px;padding:11px 14px;margin:6px 0 2px;letter-spacing:.02em;text-align:left;word-break:break-word;box-shadow:0 0 26px rgba(63,185,80,.12)}
+.hacker::before{content:'$ ';color:var(--text-2)}
+.hacker::after{content:'▊';margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+#pvbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:70;display:flex;gap:6px;align-items:center;background:rgba(14,20,31,.95);border:1px solid var(--line-2);border-radius:12px;padding:8px 10px;box-shadow:0 12px 40px rgba(0,0,0,.6);font-family:var(--mono);font-size:12px;color:var(--text-2)}
+#pvbar button{background:var(--panel-2);border:1px solid var(--line-2);color:#fff;border-radius:8px;padding:6px 10px;font-family:var(--disp);font-weight:700;font-size:12px;cursor:pointer;transition:.15s}
+#pvbar button:hover{border-color:var(--accent);transform:translateY(-1px)}
+#pvbar span{padding:0 4px;white-space:nowrap}
 .card ul.recap{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:8px}
 .card ul.recap li{font-size:13.5px;color:var(--text-2);display:flex;gap:10px;align-items:flex-start}
 .card ul.recap li b{color:#fff;font-family:var(--disp)}
@@ -210,7 +223,7 @@ header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:
 
 <div id="app">
   <header class="top">
-    <div class="brand"><span class="dot"></span> Git Without the Fear <small>Terminal Quest</small></div>
+    <div class="brand"><span class="wixmark"></span><span class="dot"></span> Git Without the Fear <small>Terminal Quest</small></div>
     <div class="levels" id="levels"></div>
     <div class="right">
       <button class="hbtn" id="btnMusic" title="Toggle chiptune music">🎵 Music</button>
@@ -281,15 +294,18 @@ header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:
 
 <!-- win -->
 <div class="ov" id="win" role="dialog" aria-modal="true" aria-label="Level cleared"><div class="card">
+  <span class="wixmark"></span>
   <div class="confetti" id="wEmoji">🏆</div>
   <div class="eye">Level cleared</div>
   <h2 id="wTitle"></h2>
+  <div class="hacker" id="wHacker"></div>
   <ul class="recap" id="wRecap"></ul>
   <div class="btnrow"><button class="btn" id="wNext">Next level →</button></div>
 </div></div>
 
 <!-- finish -->
 <div class="ov" id="fin" role="dialog" aria-modal="true" aria-label="Quest complete"><div class="card" style="text-align:center">
+  <span class="wixmark"></span>
   <div class="confetti">🕶️</div>
   <div class="eye">Quest complete</div>
   <h2>You're fearless now.</h2>
@@ -855,12 +871,26 @@ window.GIT=makeEngine();
     const gs=LEVELS[cur].goals(repo);
     if(gs.length&&gs.every(g=>g.done)){winning=true;setTimeout(showWin,450);}
   }
+  // real-hacker one-liners shown on each stage clear (picked at random)
+  const HACKS=['root@wix:~# access granted.','you\'re in. repository owned. 🖥️','git gud → status: achieved.',
+    'merge conflict? never heard of her.','no fear detected. terminal secured.','pushed to main like a legend.',
+    'history rewritten. ego intact.','you just spoke fluent git.','commit landed. mainframe stable.',
+    'elite status: unlocked.','fear.exe has stopped responding.','ssh fear@you: connection refused.'];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let hackTimer;
+  function typeHack(el,text){
+    clearInterval(hackTimer);
+    if(reduce){el.textContent=text;return;}
+    el.textContent='';let i=0;
+    hackTimer=setInterval(()=>{el.textContent=text.slice(0,++i);if(i>=text.length)clearInterval(hackTimer);},26);
+  }
   function showWin(){
     const s=store.get();s.done[LEVELS[cur].key]=true;s.max=Math.max(s.max,cur+1);store.set(s);
     renderLevels();
     const L=LEVELS[cur];
     $('#wEmoji').textContent=L.emoji;
     $('#wTitle').textContent=L.title+' · cleared!';
+    typeHack($('#wHacker'),HACKS[Math.floor(Math.random()*HACKS.length)]);
     $('#wRecap').innerHTML=L.recap.map(x=>'<li><span class="n">✓</span><div>'+x+'</div></li>').join('');
     const isLast=cur===LEVELS.length-1;
     $('#wNext').textContent=isLast?'Finish the quest 🕶️':'Next level →';
@@ -931,7 +961,45 @@ window.GIT=makeEngine();
   const s=store.get();
   if(s.max>0||Object.keys(s.done).length){$('#btnContinue').classList.remove('hidden');}else{$('#btnContinue').classList.add('hidden');}
   renderLevels();
+  // fill every "Wix Creators" mark with per-letter spans (staggered → left→right size wave)
+  document.querySelectorAll('.wixmark').forEach(el=>{
+    el.innerHTML='';
+    [...'Wix Creators'].forEach((ch,i)=>{
+      const sp=document.createElement('span');sp.textContent=ch===' '?' ':ch;sp.style.animationDelay=(i*0.05)+'s';el.appendChild(sp);
+    });
+  });
   loadLevel(0); // prime the panels behind the start overlay
+
+  // dev preview: ?preview shows a celebration navigator to step through every
+  // phrase, every level's win card, and the finish screen (no progress written)
+  if(new URLSearchParams(location.search).has('preview')){
+    let pi=0,li=0;
+    const bar=document.createElement('div');bar.id='pvbar';
+    bar.innerHTML='<button data-a="pp">◀</button><span id="pvp"></span><button data-a="pn">phrase ▶</button>'
+      +'<button data-a="lp">◀</button><span id="pvl"></span><button data-a="ln">level ▶</button>'
+      +'<button data-a="fin">🕶️ finish</button>';
+    document.body.appendChild(bar);
+    function renderWin(confetti){
+      hideOv();
+      const L=LEVELS[li];
+      $('#wEmoji').textContent=L.emoji;
+      $('#wTitle').textContent=L.title+' · cleared!';
+      typeHack($('#wHacker'),HACKS[pi]);
+      $('#wRecap').innerHTML=L.recap.map(x=>'<li><span class="n">✓</span><div>'+x+'</div></li>').join('');
+      $('#wNext').textContent=li===LEVELS.length-1?'Finish the quest 🕶️':'Next level →';
+      $('#pvp').textContent='phrase '+(pi+1)+'/'+HACKS.length;
+      $('#pvl').textContent='level '+(li+1)+'/'+LEVELS.length;
+      show('#win');if(confetti)fireConfetti();
+    }
+    bar.onclick=e=>{const a=e.target.dataset.a;if(!a)return;
+      if(a==='pn')pi=(pi+1)%HACKS.length;
+      else if(a==='pp')pi=(pi+HACKS.length-1)%HACKS.length;
+      else if(a==='ln'){li=(li+1)%LEVELS.length;renderWin(true);return;}
+      else if(a==='lp'){li=(li+LEVELS.length-1)%LEVELS.length;renderWin(true);return;}
+      else if(a==='fin'){hideOv();show('#fin');fireConfetti();return;}
+      renderWin(false);};
+    renderWin(true);
+  }
 })();
 </script>
 

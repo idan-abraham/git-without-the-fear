@@ -38,6 +38,10 @@ code{font-family:var(--mono)}
 .hero .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%)}
 .hero-inner{position:relative;z-index:2;max-width:820px;margin:0 auto}
 .kicker{display:inline-block;font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7AABFF;border:1px solid rgba(122,171,255,.35);border-radius:999px;padding:6px 16px;margin-bottom:26px}
+.wixmark{display:inline-block;font-family:var(--disp);font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);padding:6px 12px;border-radius:7px;line-height:1;margin-bottom:20px;color:#3B82F6;animation:wixhue 4s linear infinite!important}
+.wixmark span{display:inline-block;animation:wixwave 1.8s ease-in-out infinite!important}
+@keyframes wixhue{to{filter:hue-rotate(360deg)}}
+@keyframes wixwave{0%,55%,100%{transform:scale(1)}28%{transform:scale(1.6)}}
 .hero h1{font-size:clamp(40px,7vw,84px);font-weight:800;background:linear-gradient(120deg,#fff 25%,#7AABFF 65%,#116DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .strike{color:#4B5563;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:var(--danger)}
 .hero p{font-size:clamp(17px,2vw,21px);color:#C7CDD6;max-width:56ch;margin:22px auto 0}
@@ -147,6 +151,7 @@ footer code{background:#F3F4F6;padding:2px 7px;border-radius:6px;color:var(--tex
 <header class="hero">
   <div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hero-inner">
+    <div class="wixmark"><span style="animation-delay:0s">W</span><span style="animation-delay:.05s">i</span><span style="animation-delay:.1s">x</span><span style="animation-delay:.15s">&nbsp;</span><span style="animation-delay:.2s">C</span><span style="animation-delay:.25s">r</span><span style="animation-delay:.3s">e</span><span style="animation-delay:.35s">a</span><span style="animation-delay:.4s">t</span><span style="animation-delay:.45s">o</span><span style="animation-delay:.5s">r</span><span style="animation-delay:.55s">s</span></div>
     <span class="kicker">Git Without the Fear · Drills</span>
     <h1>Feel the <span class="strike">fear</span> problem,<br>then fix it.</h1>
     <p>Five hands-on drills that recreate the exact Git confusions people hit — on purpose, in a safe repo — and walk you right back out of each one.</p>
