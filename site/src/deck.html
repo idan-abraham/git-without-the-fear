@@ -194,6 +194,11 @@ h2.title .hl{color:var(--accent)}
 .cheat td:last-child{font-family:var(--mono); color:var(--accent-deep); font-weight:600; font-size:.92em}
 .cheat tr:last-child td{border-bottom:none}
 .golden{margin-top:22px; background:var(--accent-light); border-left:4px solid var(--accent); border-radius:0 12px 12px 0; padding:16px 22px; font-size:clamp(15px,1.7vw,19px); color:var(--accent-deep); font-weight:600; max-width:70ch}
+/* "you already do this" — maps a Creator Kit skill onto the Git concept on this slide */
+.ck-note{margin-top:22px; display:inline-flex; align-items:center; gap:11px; flex-wrap:wrap; font-family:var(--mono); font-size:13.5px; line-height:1.5; color:var(--text-secondary); background:rgba(17,109,255,.06); border:1px dashed rgba(17,109,255,.38); border-radius:12px; padding:10px 15px; max-width:72ch}
+.ck-note .lab{font-family:var(--disp); font-weight:800; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-deep); flex:0 0 auto}
+.ck-note code{font-family:var(--mono); background:rgba(17,109,255,.12); color:var(--accent-deep); padding:2px 7px; border-radius:6px; font-weight:600}
+.ckcmd{font-family:var(--mono); font-size:.9em; background:var(--accent-light); color:var(--accent-deep); padding:2px 8px; border-radius:6px; font-weight:700}
 
 /* closing */
 #closing{background:var(--accent); color:#fff}
@@ -425,6 +430,7 @@ h2.title .hl{color:var(--accent)}
         </div>
       </div>
       <p class="golden reveal d4" style="margin-top:24px">A branch is a <b>parallel timeline</b>, not a place on disk. One project folder — many save-lines you flip between.</p>
+      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-ux-concepts</code> will spin up 5 UX concepts from one spec — parallel lines of work, one starting point. That's branching.</span></div>
     </div>
   </section>
 
@@ -439,6 +445,7 @@ h2.title .hl{color:var(--accent)}
         <div class="card reveal d4"><span class="ico">✅</span><h3>Approve → merge</h3><p>Once everyone's happy, merge. Your branch folds into the shared version.</p></div>
       </div>
       <p class="golden reveal d4" style="margin-top:28px">You already live in comment threads — Docs, Figma, Slides. A PR is <b>the same thing</b>, just attached to the actual change instead of floating next to it.</p>
+      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-share-work</code> will turn your work into a link where colleagues leave comments and you reply. That's a PR.</span></div>
     </div>
   </section>
 
@@ -454,6 +461,7 @@ h2.title .hl{color:var(--accent)}
         <li><span class="tick">3</span><div>Comment on the <b>real</b> change inside a PR — feedback lands where the work is.</div></li>
         <li><span class="tick">4</span><div>Tweak a color token or a button label <b>yourself</b> — no ticket, no waiting.</div></li>
       </ul>
+      <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>ck-ux-current-product</code> will capture exactly what exists today before you touch it — the baseline every later change gets measured against.</span></div>
     </div>
   </section>
 
@@ -499,6 +507,23 @@ h2.title .hl{color:var(--accent)}
     </div>
   </section>
 
+  <!-- 13.4 · THE LOOP IN CREATOR KIT -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow reveal d1">How it plugs in</div>
+      <h2 class="title reveal d2">In Creator Kit, that loop is a few <span class="hl">slash commands</span></h2>
+      <ul class="list reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;margin-top:10px">
+        <li><span class="tick">1</span><div><b>Sync</b> &rarr; <code class="ckcmd">/sync</code> — pulls latest, merges main, resolves any clashes</div></li>
+        <li><span class="tick">2</span><div><b>Branch</b> &rarr; <code class="ckcmd">/new</code> — starts a clean line of work</div></li>
+        <li><span class="tick">3</span><div><b>Edit</b> &rarr; <code class="ckcmd">ck-ux-*</code> <code class="ckcmd">ck-flow-*</code> — your design, copy &amp; specs</div></li>
+        <li><span class="tick">4</span><div><b>Review</b> &rarr; <code class="ckcmd">/review</code> — a self-check before the PR</div></li>
+        <li><span class="tick">5</span><div><b>PR</b> &rarr; <code class="ckcmd">/pr</code> + <code class="ckcmd">ck-share-work</code> — open it, share a link people comment on</div></li>
+        <li><span class="tick">6</span><div><b>Answer</b> &rarr; resolve the review comments, reply with another commit</div></li>
+      </ul>
+      <p class="golden reveal d4" style="margin-top:24px"><b>Commit &amp; push happen under the hood.</b> You'll type maybe four commands — Git runs the rest, and you never leave Creator Kit.</p>
+    </div>
+  </section>
+
   <!-- 13.5 · BRANCH HYGIENE -->
   <section class="slide">
     <div class="wrap">
@@ -510,6 +535,7 @@ h2.title .hl{color:var(--accent)}
         <div class="card reveal d4"><span class="ico">🔀</span><h3>Merge, then start fresh</h3><p>Open the PR, get it merged, then cut a <b>new</b> small branch for the next thing.</p></div>
       </div>
       <p class="golden reveal d4" style="margin-top:26px">Already 2 weeks deep on one giant branch? 😅 The way out: open a PR now, merge what's ready, then cut small branches from here. A short branch is easy to review — a giant one scares everyone, including you.</p>
+      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-ux-full-design</code> will design only the flows your feature touches and leave everything else out. One branch, one thing.</span></div>
     </div>
   </section>
 
@@ -564,6 +590,7 @@ h2.title .hl{color:var(--accent)}
             <li><span class="tick">2</span><div>Keep the text you want (often: keep both)</div></li>
             <li><span class="tick">3</span><div>Save → done. That's the whole "monster."</div></li>
           </ul>
+          <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>/sync</code> (ck-utility-sync) will pull the latest, merge main into your work, and walk you through exactly this.</span></div>
         </div>
       </div>
     </div>
