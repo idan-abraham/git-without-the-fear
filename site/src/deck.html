@@ -335,9 +335,9 @@ h2.title .hl{color:var(--accent)}
       <div class="eyebrow reveal d1">The reframe</div>
       <h2 class="title reveal d2">Git is just <span class="hl">save points</span> for your work.</h2>
       <div class="cards c3">
-        <div class="card reveal d2"><span class="ico">🎮</span><h3>Like a video game</h3><p>Every <b>commit</b> is a save point you can always return to. Made a mess? Load an earlier save.</p></div>
+        <div class="card reveal d2"><span class="ico">🎮</span><h3>Like a video game</h3><p>Every <b>commit</b> is a checkpoint you can always return to. Made a mess? Jump back to an earlier one.</p></div>
         <div class="card reveal d3"><span class="ico">⏪</span><h3>Undo for real life</h3><p>It's a time machine for a whole project — not one file, but every file, with a note on why it changed.</p></div>
-        <div class="card reveal d4"><span class="ico">🛟</span><h3>Hard to truly lose</h3><p>Once something is committed, it's <b>very</b> hard to actually lose it. That's the whole point — safety.</p></div>
+        <div class="card reveal d4"><span class="ico">🛟</span><h3>Nothing gets clobbered</h3><p>Once you commit, that snapshot stays put — safe, labelled, and yours to return to.</p></div>
       </div>
     </div>
   </section>
@@ -400,7 +400,7 @@ h2.title .hl{color:var(--accent)}
       <div class="cards c4">
         <div class="card substep"><div class="termbadge">repo</div><h3>Repo</h3><p>A project folder that Git is watching. "The repo" = the project.</p></div>
         <div class="card substep"><div class="termbadge">commit</div><h3>Commit</h3><p>One save point + a short note on what changed and why.</p></div>
-        <div class="card substep"><div class="termbadge">branch</div><h3>Branch</h3><p>A parallel version of the project to work on, without touching everyone else's. <b>Not</b> a new folder.</p></div>
+        <div class="card substep"><div class="termbadge">branch</div><h3>Branch</h3><p>A parallel version of the project to work on, without touching everyone else's — you flip between them in place.</p></div>
         <div class="card substep"><div class="termbadge">pull request</div><h3>PR</h3><p>"Here's my change — please look, then merge it in." Where review happens.</p></div>
       </div>
     </div>
@@ -430,7 +430,7 @@ h2.title .hl{color:var(--accent)}
         </div>
       </div>
       <p class="golden reveal d4" style="margin-top:24px">A branch is a <b>parallel timeline</b>, not a place on disk. One project folder — many save-lines you flip between.</p>
-      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-ux-concepts</code> will spin up 5 UX concepts from one spec — parallel lines of work, one starting point. That's branching.</span></div>
+      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-ux-concepts</code> will spin up 5 UX concepts from one spec — parallel lines of work, one starting point. Think of it like branching.</span></div>
     </div>
   </section>
 
@@ -445,7 +445,6 @@ h2.title .hl{color:var(--accent)}
         <div class="card reveal d4"><span class="ico">✅</span><h3>Approve → merge</h3><p>Once everyone's happy, merge. Your branch folds into the shared version.</p></div>
       </div>
       <p class="golden reveal d4" style="margin-top:28px">You already live in comment threads — Docs, Figma, Slides. A PR is <b>the same thing</b>, just attached to the actual change instead of floating next to it.</p>
-      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-share-work</code> will turn your work into a link where colleagues leave comments and you reply. That's a PR.</span></div>
     </div>
   </section>
 
@@ -457,11 +456,11 @@ h2.title .hl{color:var(--accent)}
       <h2 class="title reveal d2">Your design decisions get a <span class="hl">history</span></h2>
       <ul class="list reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:16px 48px">
         <li><span class="tick">1</span><div>Your tokens, copy &amp; assets live <b>with</b> the product — versioned, never lost in a Slack thread.</div></li>
-        <li><span class="tick">2</span><div>See <b>exactly</b> what shipped vs. what you handed off — pixel changes show up as a diff.</div></li>
-        <li><span class="tick">3</span><div>Comment on the <b>real</b> change inside a PR — feedback lands where the work is.</div></li>
+        <li><span class="tick">2</span><div>See <b>exactly</b> what changed — text you own (tokens, copy) shows up as a <b>diff</b>: a highlighted before/after. Changed images show side-by-side.</div></li>
+        <li><span class="tick">3</span><div>Every change carries a <b>who &amp; why</b> — the reasoning travels with the design, not lost in DMs.</div></li>
         <li><span class="tick">4</span><div>Tweak a color token or a button label <b>yourself</b> — no ticket, no waiting.</div></li>
       </ul>
-      <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>ck-ux-current-product</code> will capture exactly what exists today before you touch it — the baseline every later change gets measured against.</span></div>
+      <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span>Like this: <code>ck-ux-current-product</code> captures what exists today — a starting reference to compare your changes against.</span></div>
     </div>
   </section>
 
@@ -472,20 +471,12 @@ h2.title .hl{color:var(--accent)}
       <div class="eyebrow reveal d1" style="color:var(--purple)">Why this matters · if you're a PM</div>
       <h2 class="title reveal d2">You see what's <span style="color:var(--purple)">really</span> shipping</h2>
       <ul class="list pm reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:16px 48px">
-        <li><span class="tick">1</span><div>Read a PR to know what <b>actually</b> shipped — not what the ticket promised.</div></li>
-        <li><span class="tick">2</span><div>Open branches = features <b>in flight</b>, visible at a glance. Your roadmap, live.</div></li>
+        <li><span class="tick">1</span><div>Read a PR to know what <b>actually</b> merged — not what the ticket promised.</div></li>
+        <li><span class="tick">2</span><div>Open branches = work <b>in flight</b>, visible at a glance.</div></li>
         <li><span class="tick">3</span><div>Edit specs, docs &amp; copy <b>directly</b> in the repo — where devs will actually read them.</div></li>
         <li><span class="tick">4</span><div>Review &amp; approve a change <b>without a meeting</b> — a comment and a click.</div></li>
       </ul>
-    </div>
-  </section>
-
-  <!-- 12 · THE SUPERPOWER -->
-  <section class="slide surface">
-    <div class="wrap" style="text-align:center">
-      <div class="eyebrow reveal d1">The real unlock</div>
-      <h2 class="big-statement reveal d2" style="margin:0 auto">You stop being a <span style="color:var(--text-muted)">bystander</span> to the build —<br>and start <span class="hl">participating</span> in it.</h2>
-      <p class="lead substep" style="margin:26px auto 0; text-align:center">You speak the same language as the people shipping your product. That changes every conversation you have with them.</p>
+      <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span>Like this: <code>ck-status</code> reads straight from Git and your artifacts to show where the work actually stands.</span></div>
     </div>
   </section>
 
@@ -496,46 +487,14 @@ h2.title .hl{color:var(--accent)}
       <div class="eyebrow reveal d1">Do it with your hands</div>
       <h2 class="title reveal d2">The everyday loop — <span class="hl">6 steps</span>, every time</h2>
       <div class="flow reveal d2">
-        <div class="step substep"><div class="dot">1</div><h4>Sync</h4><p>Pull the latest main before you start</p></div>
+        <div class="step substep"><div class="dot">1</div><h4>Sync</h4><p>Pull the latest main (the shared version everyone builds on)</p></div>
         <div class="step substep"><div class="dot">2</div><h4>Branch</h4><p>Start your own safe line of work</p></div>
         <div class="step substep"><div class="dot">3</div><h4>Edit</h4><p>Do your thing — design, copy, docs</p></div>
         <div class="step substep"><div class="dot">4</div><h4>Commit</h4><p>Save a snapshot + a note</p></div>
         <div class="step substep"><div class="dot">5</div><h4>Push</h4><p>Send your branch to the cloud</p></div>
         <div class="step substep"><div class="dot">6</div><h4>PR</h4><p>Propose it → review → merge</p></div>
       </div>
-      <p class="lead reveal d3" style="margin:32px auto 0;text-align:center">That's the entire job developers do all day. Six steps. You'll do it yourself in a minute. <span style="color:var(--text-muted)">(You only <code>clone</code> once, on day one — after that, it's just this loop.)</span></p>
-    </div>
-  </section>
-
-  <!-- 13.4 · THE LOOP IN CREATOR KIT -->
-  <section class="slide">
-    <div class="wrap">
-      <div class="eyebrow reveal d1">How it plugs in</div>
-      <h2 class="title reveal d2">In Creator Kit, that loop is a few <span class="hl">slash commands</span></h2>
-      <ul class="list reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;margin-top:10px">
-        <li><span class="tick">1</span><div><b>Sync</b> &rarr; <code class="ckcmd">/sync</code> — pulls latest, merges main, resolves any clashes</div></li>
-        <li><span class="tick">2</span><div><b>Branch</b> &rarr; <code class="ckcmd">/new</code> — starts a clean line of work</div></li>
-        <li><span class="tick">3</span><div><b>Edit</b> &rarr; <code class="ckcmd">ck-ux-*</code> <code class="ckcmd">ck-flow-*</code> — your design, copy &amp; specs</div></li>
-        <li><span class="tick">4</span><div><b>Review</b> &rarr; <code class="ckcmd">/review</code> — a self-check before the PR</div></li>
-        <li><span class="tick">5</span><div><b>PR</b> &rarr; <code class="ckcmd">/pr</code> + <code class="ckcmd">ck-share-work</code> — open it, share a link people comment on</div></li>
-        <li><span class="tick">6</span><div><b>Answer</b> &rarr; resolve the review comments, reply with another commit</div></li>
-      </ul>
-      <p class="golden reveal d4" style="margin-top:24px"><b>Commit &amp; push happen under the hood.</b> You'll type maybe four commands — Git runs the rest, and you never leave Creator Kit.</p>
-    </div>
-  </section>
-
-  <!-- 13.5 · BRANCH HYGIENE -->
-  <section class="slide">
-    <div class="wrap">
-      <div class="eyebrow reveal d1">A habit that saves you</div>
-      <h2 class="title reveal d2">One branch, <span class="hl">one thing</span></h2>
-      <div class="cards c3">
-        <div class="card reveal d2"><span class="ico">🎯</span><h3>One piece of work</h3><p>A single feature, fix, or artifact per branch — not two weeks of everything piled together.</p></div>
-        <div class="card reveal d3"><span class="ico">☁️</span><h3>Push when it's done</h3><p>Finished the piece? Push it. Push often in between too — pushing is just backing up to the cloud.</p></div>
-        <div class="card reveal d4"><span class="ico">🔀</span><h3>Merge, then start fresh</h3><p>Open the PR, get it merged, then cut a <b>new</b> small branch for the next thing.</p></div>
-      </div>
-      <p class="golden reveal d4" style="margin-top:26px">Already 2 weeks deep on one giant branch? 😅 The way out: open a PR now, merge what's ready, then cut small branches from here. A short branch is easy to review — a giant one scares everyone, including you.</p>
-      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span><code>ck-ux-full-design</code> will design only the flows your feature touches and leave everything else out. One branch, one thing.</span></div>
+      <p class="lead reveal d3" style="margin:32px auto 0;text-align:center">That's the everyday Git loop developers run — the wrapper around the real building. Six steps. You'll do it yourself in a minute. <span style="color:var(--text-muted)">(You only <code>clone</code> once, on day one — after that, it's just this loop.)</span></p>
     </div>
   </section>
 
@@ -562,11 +521,44 @@ h2.title .hl{color:var(--accent)}
         <div class="ci"><span class="n">1</span><div><b>Clone</b> the repo <code>git clone &lt;url&gt;</code></div></div>
         <div class="ci"><span class="n">2</span><div><b>Branch</b> with your name <code>git checkout -b add-jane-doe</code></div></div>
         <div class="ci"><span class="n">3</span><div><b>Make your file</b> — copy the template, fill it in</div></div>
-        <div class="ci"><span class="n">4</span><div><b>Commit</b> it <code>git commit -m "Add Jane's intro"</code></div></div>
+        <div class="ci"><span class="n">4</span><div><b>Stage &amp; commit</b> <code>git add .</code> then <code>git commit -m "Add Jane's intro"</code></div></div>
         <div class="ci"><span class="n">5</span><div><b>Push</b> your branch <code>git push -u origin add-jane-doe</code></div></div>
         <div class="ci"><span class="n">6</span><div><b>Open a PR</b> — click the green button on GitHub 🎉</div></div>
       </div>
-      <p class="golden reveal d3" style="margin-top:26px">Repo → <code>git-without-the-fear</code>. Do all six and you've done the exact loop a developer does every single day.</p>
+      <p class="golden reveal d3" style="margin-top:26px">Repo → <code>git-without-the-fear</code>. Do all six and you've run the exact Git loop a developer runs every day.</p>
+    </div>
+  </section>
+
+  <!-- 15.5 · THE LOOP IN CREATOR KIT -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow reveal d1">How it plugs in</div>
+      <h2 class="title reveal d2">In Creator Kit, that loop is a few <span class="hl">slash commands</span></h2>
+      <p class="lead reveal d2" style="margin:4px auto 16px;text-align:center;max-width:62ch">You just ran the loop by hand so you can see the gears. Day-to-day, Creator Kit runs those same steps for you:</p>
+      <ul class="list reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;margin-top:6px">
+        <li><span class="tick">1</span><div><b>Sync</b> &rarr; <code class="ckcmd">/sync</code> — pulls latest, merges main, resolves any clashes</div></li>
+        <li><span class="tick">2</span><div><b>Branch</b> &rarr; <code class="ckcmd">/new</code> — starts a clean line of work</div></li>
+        <li><span class="tick">3</span><div><b>Edit</b> &rarr; <code class="ckcmd">ck-ux-*</code> <code class="ckcmd">ck-flow-*</code> — your design, copy &amp; specs</div></li>
+        <li><span class="tick">4</span><div><b>Review</b> &rarr; <code class="ckcmd">/review</code> — a self-check before the PR</div></li>
+        <li><span class="tick">5</span><div><b>PR</b> &rarr; <code class="ckcmd">/pr</code> + <code class="ckcmd">ck-share-work</code> — open it, share a link people comment on</div></li>
+        <li><span class="tick">6</span><div><b>Answer</b> &rarr; resolve the review comments, reply with another commit</div></li>
+      </ul>
+      <p class="golden reveal d4" style="margin-top:24px"><b>Commit &amp; push happen under the hood.</b> You'll type maybe four commands — Git runs the rest, and you never leave Creator Kit.</p>
+    </div>
+  </section>
+
+  <!-- 15.6 · BRANCH HYGIENE -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="eyebrow reveal d1">A habit that saves you</div>
+      <h2 class="title reveal d2">One branch, <span class="hl">one thing</span></h2>
+      <div class="cards c3">
+        <div class="card reveal d2"><span class="ico">🎯</span><h3>One piece of work</h3><p>A single feature, fix, or artifact per branch — not two weeks of everything piled together.</p></div>
+        <div class="card reveal d3"><span class="ico">☁️</span><h3>Push when it's done</h3><p>Finished the piece? Push it. Push often in between too — pushing is just backing up to the cloud.</p></div>
+        <div class="card reveal d4"><span class="ico">🔀</span><h3>Merge, then start fresh</h3><p>Open the PR, get it merged, then cut a <b>new</b> small branch for the next thing.</p></div>
+      </div>
+      <p class="golden reveal d4" style="margin-top:26px">Already 2 weeks deep on one giant branch? 😅 The way out: open a PR now, merge what's ready, then cut small branches from here. A short branch is easy to review — a giant one scares everyone, including you.</p>
+      <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span>Like this: <code>ck-ux-full-design</code> designs only the flows your feature touches, nothing unrelated — the design side of “one branch, one thing.”</span></div>
     </div>
   </section>
 
@@ -588,9 +580,9 @@ h2.title .hl{color:var(--accent)}
           <ul class="list" style="margin-top:16px">
             <li><span class="tick">1</span><div>Delete the <code style="font-family:var(--mono);background:var(--accent-light);color:var(--accent-deep);padding:1px 6px;border-radius:5px">&lt;&lt;&lt;</code> <code style="font-family:var(--mono);background:var(--accent-light);color:var(--accent-deep);padding:1px 6px;border-radius:5px">===</code> <code style="font-family:var(--mono);background:var(--accent-light);color:var(--accent-deep);padding:1px 6px;border-radius:5px">&gt;&gt;&gt;</code> markers</div></li>
             <li><span class="tick">2</span><div>Keep the text you want (often: keep both)</div></li>
-            <li><span class="tick">3</span><div>Save → done. That's the whole "monster."</div></li>
+            <li><span class="tick">3</span><div>Save, then stage &amp; commit to finish the merge — done. That's the whole "monster."</div></li>
           </ul>
-          <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>/sync</code> (ck-utility-sync) will pull the latest, merge main into your work, and walk you through exactly this.</span></div>
+          <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>/sync</code> pulls the latest, merges main into your work, and walks you through exactly this — the same command from the loop.</span></div>
         </div>
       </div>
     </div>
@@ -620,11 +612,12 @@ h2.title .hl{color:var(--accent)}
         <tr><td>Copy the repo down</td><td>git clone &lt;url&gt;</td></tr>
         <tr><td>Start my own line of work</td><td>git checkout -b my-branch</td></tr>
         <tr><td>See what I changed</td><td>git status</td></tr>
+        <tr><td>Stage my changes</td><td>git add .</td></tr>
         <tr><td>Save a snapshot</td><td>git commit -m "message"</td></tr>
         <tr><td>Send it to GitHub</td><td>git push -u origin my-branch</td></tr>
         <tr><td>Get everyone else's changes</td><td>git pull</td></tr>
       </table>
-      <p class="golden reveal d3" style="margin-top:22px">Six commands cover almost everything you'll ever do. Print it, bookmark it — no memorising required.</p>
+      <p class="golden reveal d3" style="margin-top:22px">A handful of commands cover almost everything you'll ever do. Print it, bookmark it — no memorising required.</p>
     </div>
   </section>
 
@@ -632,7 +625,7 @@ h2.title .hl{color:var(--accent)}
   <section class="slide" id="closing">
     <div class="wrap">
       <h2 class="reveal d1">You don't need to become a developer.<br>You just need to stop being afraid.</h2>
-      <p class="sub reveal d2">Two years ago that was me. The whole monster was 6 steps and 4 words — and now it's yours.</p>
+      <p class="sub reveal d2">Two years ago that was me. The whole monster was 6 steps and 4 words — and now it's yours. You're not a bystander to the build anymore; you're in it.</p>
       <div class="cta reveal d3">→ Open <code>git-without-the-fear</code> and do the drill. I'll be right here.</div>
       <div class="reveal d4" style="margin-top:26px">
         <a href="/" style="display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:var(--disp);font-weight:800;font-size:15px;color:#fff;background:var(--accent);border-radius:999px;padding:13px 28px;box-shadow:0 14px 34px rgba(17,109,255,.42)">🏠 Go home</a>
