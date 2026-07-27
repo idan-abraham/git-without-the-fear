@@ -798,18 +798,24 @@ window.GIT=makeEngine();
 
   // ---- renderers ----
   function renderAll(){renderHead();renderGoals();renderGraph();renderFiles();renderNext();}
-  // Pull the immediate next command out of a hint's prose so it can be click-to-filled.
+  // Pull EVERY command out of a hint's prose so each can be click-to-filled on its own.
+  // Hints chain steps with → … or "then"; the sim runs one command at a time, so we split
+  // the chain and offer one fill button per command rather than injecting an unrunnable blob.
   // ponytail: tuned to the closed set of hint strings in LEVELS; revisit if hints change shape.
-  function firstCmd(h){
-    const s=h.replace(/\([^)]*\)/g,' ');           // drop parenthetical asides
-    const i=s.search(/\b(?:git|echo|cat)\b/);
+  function oneCmd(rest){
+    const i=rest.search(/\b(?:git|echo|cat)\b/);
     if(i<0)return null;
-    const rest=s.slice(i);
+    rest=rest.slice(i);
     if(/^echo\b/.test(rest)){const m=rest.match(/^echo\s+"[^"]*"\s*>>?\s*\S+/);return m?m[0]:null;}
     if(/^cat\b/.test(rest)){const m=rest.match(/^cat\s+\S+/);return m?m[0]:null;}
-    // git: stop at a separator, a second clause, or descriptive prose
-    const g=rest.split(/\s{2,}[→…]|\s+then\b|,\s|\.\s|:\s|\b(?:shows?|should|still|here|too)\b/)[0];
+    // git: stop at a second clause or descriptive prose
+    const g=rest.split(/\s{2,}|,\s|\.\s|:\s|\b(?:shows?|should|still|here|too)\b/)[0];
     return g.trim().replace(/[.,;:]+$/,'')||null;
+  }
+  function hintCmds(h){
+    const s=h.replace(/\([^)]*\)/g,' ');           // drop parenthetical asides
+    if(s.search(/\b(?:git|echo|cat)\b/)<0)return [];
+    return s.split(/\s*(?:→|…|\bthen\b)\s*/i).map(oneCmd).filter(Boolean);
   }
   let showNext=false; // stays collapsed until the player asks — lean, non-spoiler by default
   function renderNext(){
@@ -824,9 +830,10 @@ window.GIT=makeEngine();
     el.className='nextstep';
     const h=LEVELS[cur].hint(repo);
     el.innerHTML='<span class="lbl">▸ Next</span><span class="txt">'+esc(h)+'</span>';
-    const c=firstCmd(h);
-    if(c){const b=document.createElement('button');b.type='button';b.className='fill';b.textContent='⏎ '+c;
-      b.title='Fill this command into the terminal';b.onclick=()=>{cmd.value=c;cmd.focus();};el.appendChild(b);}
+    hintCmds(h).forEach(c=>{
+      const b=document.createElement('button');b.type='button';b.className='fill';b.textContent='⏎ '+c;
+      b.title='Fill this command into the terminal';b.onclick=()=>{cmd.value=c;cmd.focus();};el.appendChild(b);
+    });
     const x=document.createElement('button');x.type='button';x.className='x';x.setAttribute('aria-label','Hide next step');x.textContent='×';
     x.onclick=()=>{showNext=false;renderNext();cmd.focus();};el.appendChild(x);
   }
