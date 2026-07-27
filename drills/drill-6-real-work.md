@@ -36,9 +36,9 @@ and the #1 cause of painful conflicts later.)*
 Make **your own** feature folder inside the payments domain so 20 people can work at
 once without colliding:
 ```
-projects/payments/<yourname>-<short-topic>/
+projects/general/git-workshop/<yourname>-<short-topic>/
 ```
-e.g. `projects/payments/dana-express-checkout-scan/`. Open that folder, then:
+e.g. `projects/general/git-workshop/dana-express-checkout-scan/`. Open that folder, then:
 ```
 /ck-new
 ```
@@ -98,7 +98,7 @@ GitHub is the same reflex attached to the real thing.
 The scariest sandbox drill was the pull conflict. Here's the same thing on a live
 repo, resolved by the one command Etay swears by.
 
-**Facilitator setup (once):** on `master`, create `projects/payments/_workshop-roster.md`
+**Facilitator setup (once):** on `master`, create `projects/general/git-workshop/_workshop-roster.md`
 with a single shared line near the top:
 ```
 **Last person to join:** (nobody yet)

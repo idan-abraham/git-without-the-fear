@@ -58,7 +58,7 @@ footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
   <h2>The loop</h2>
   <ol class="steps">
     <li><h3>Get current — clean slate</h3><p>In your <code class="k">creators</code> clone, run <code class="k">/ck-utility-master</code>. It switches to <code class="k">master</code>, pulls the latest, and updates Creator Kit. Start clean, every time — the single most-skipped step.</p><span class="drillmap">↳ Level 1 · a branch is not a folder</span></li>
-    <li><h3>Start your piece — one branch, one thing</h3><p>Make your own folder <code class="k">projects/payments/&lt;yourname&gt;-&lt;topic&gt;/</code> so 20 people work at once without colliding. Open it, then <code class="k">/ck-new</code> — it creates your branch and project structure.</p><span class="drillmap">↳ Level 4 · one branch, one thing</span></li>
+    <li><h3>Start your piece — one branch, one thing</h3><p>Make your own folder <code class="k">projects/general/git-workshop/&lt;yourname&gt;-&lt;topic&gt;/</code> so 20 people work at once without colliding. Open it, then <code class="k">/ck-new</code> — it creates your branch and project structure.</p><span class="drillmap">↳ Level 4 · one branch, one thing</span></li>
     <li><h3>Build something real — one focused skill (~15 min)</h3><p>Run one skill and let it produce a real artifact: <code class="k">/ck-research-competitors</code> (or <code class="k">/ck-product-spec</code>, <code class="k">/ck-data-query</code>). Pick one — resist starting three. Creator Kit stages &amp; commits it for you.</p><span class="drillmap">↳ Level 2 · staging, done for you</span></li>
     <li><h3>Draft PR early — back it up now</h3><p>Don't wait until you're "done": <code class="k">/ck-utility-pr</code> opens a <b>draft</b> Pull Request. The moment it exists, your work lives on GitHub — not just your laptop — and there's a link to share.</p><span class="drillmap">↳ Level 4 · the way out</span></li>
     <li><h3>Keep going — push to the same PR</h3><p>Run a second skill or refine the first, then let Creator Kit push again. Reload the PR: the new commit is already there. No second PR, no lost work — the PR updates itself.</p></li>
@@ -68,7 +68,7 @@ footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
   <h2>🔥 The conflict finale</h2>
   <p class="lead" style="margin-top:8px">The scariest level was the pull conflict. Here it is on a live repo, resolved by the one command that walks you through it.</p>
   <div class="callout fire">
-    <b>Facilitator, once:</b> on <code class="k">master</code>, create <code class="k">projects/payments/_workshop-roster.md</code> with a shared line — <code class="k">**Last person to join:** (nobody yet)</code> — and push it before the session.<br><br>
+    <b>Facilitator, once:</b> on <code class="k">master</code>, create <code class="k">projects/general/git-workshop/_workshop-roster.md</code> with a shared line — <code class="k">**Last person to join:** (nobody yet)</code> — and push it before the session.<br><br>
     <b>Everyone, on your branch:</b> change that shared line to your own name, add a row, let Creator Kit commit + push to your PR.<br><br>
     <b>Facilitator, after everyone has branched:</b> change that same line on <code class="k">master</code> and push. Now <code class="k">master</code> and every branch disagree on the same line — a real divergence, on purpose.<br><br>
     <b>Everyone, now run <code class="k">/ck-utility-sync</code>:</b> it pulls <code class="k">master</code> in, hits the conflict, and walks you through it — keep yours, take theirs, or combine. No panic, no <code class="k">git</code> surgery. The thing you dreaded is a guided two-minute step.
@@ -86,7 +86,7 @@ footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
   <div class="golden"><b>🧹 When it's merged:</b> click GitHub's "Delete branch", then <code class="k">/ck-utility-master</code> for whatever's next.</div>
 
   <div class="links">
-    <a href="https://github.com/wix-private/creators/tree/master/projects/payments" target="_blank" rel="noopener">📂 projects/payments →</a>
+    <a href="https://github.com/wix-private/creators/tree/master/projects/general/git-workshop" target="_blank" rel="noopener">📂 projects/general/git-workshop →</a>
     <a href="/play">🎮 Back to the Quest</a>
   </div>
 
