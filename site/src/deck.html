@@ -536,14 +536,14 @@ h2.title .hl{color:var(--accent)}
       <h2 class="title reveal d2">In Creator Kit, that loop is a few <span class="hl">slash commands</span></h2>
       <p class="lead reveal d2" style="margin:4px auto 16px;text-align:center;max-width:62ch">You just ran the loop by hand so you can see the gears. Day-to-day, Creator Kit runs those same steps for you:</p>
       <ul class="list reveal d2" style="max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;margin-top:6px">
-        <li><span class="tick">1</span><div><b>Sync</b> &rarr; <code class="ckcmd">/sync</code> — pulls latest, merges main, resolves any clashes</div></li>
-        <li><span class="tick">2</span><div><b>Branch</b> &rarr; <code class="ckcmd">/new</code> — starts a clean line of work</div></li>
+        <li><span class="tick">1</span><div><b>Sync</b> &rarr; <code class="ckcmd">/ck-utility-sync</code> — pulls latest, merges main, resolves any clashes</div></li>
+        <li><span class="tick">2</span><div><b>Branch</b> &rarr; <code class="ckcmd">/ck-new</code> — starts a clean line of work</div></li>
         <li><span class="tick">3</span><div><b>Edit</b> &rarr; <code class="ckcmd">ck-ux-*</code> <code class="ckcmd">ck-flow-*</code> — your design, copy &amp; specs</div></li>
-        <li><span class="tick">4</span><div><b>Review</b> &rarr; <code class="ckcmd">/review</code> — a self-check before the PR</div></li>
-        <li><span class="tick">5</span><div><b>PR</b> &rarr; <code class="ckcmd">/pr</code> + <code class="ckcmd">ck-share-work</code> — open it, share a link people comment on</div></li>
+        <li><span class="tick">4</span><div><b>Review</b> &rarr; <code class="ckcmd">/ck-utility-code-review</code> — a self-check before the PR</div></li>
+        <li><span class="tick">5</span><div><b>PR</b> &rarr; <code class="ckcmd">/ck-utility-pr</code> + <code class="ckcmd">ck-share-work</code> — open it, share a link people comment on</div></li>
         <li><span class="tick">6</span><div><b>Answer</b> &rarr; resolve the review comments, reply with another commit</div></li>
       </ul>
-      <p class="golden reveal d4" style="margin-top:24px"><b>Commit &amp; push happen under the hood.</b> You'll type maybe four commands — Git runs the rest, and you never leave Creator Kit.</p>
+      <p class="golden reveal d4" style="margin-top:24px"><b>Commit &amp; push happen under the hood.</b> You mostly just say what you want — Claude runs the Git for you, and you never leave Creator Kit.</p>
     </div>
   </section>
 
@@ -553,11 +553,11 @@ h2.title .hl{color:var(--accent)}
       <div class="eyebrow reveal d1">A habit that saves you</div>
       <h2 class="title reveal d2">One branch, <span class="hl">one thing</span></h2>
       <div class="cards c3">
-        <div class="card reveal d2"><span class="ico">🎯</span><h3>One piece of work</h3><p>A single feature, fix, or artifact per branch — not two weeks of everything piled together.</p></div>
-        <div class="card reveal d3"><span class="ico">☁️</span><h3>Push when it's done</h3><p>Finished the piece? Push it. Push often in between too — pushing is just backing up to the cloud.</p></div>
+        <div class="card reveal d2"><span class="ico">🎯</span><h3>One piece of work</h3><p>A single feature, fix, or artifact per branch — not a pile of unrelated changes stacked together.</p></div>
+        <div class="card reveal d3"><span class="ico">☁️</span><h3>Open a draft PR early</h3><p>Cut the branch, open a draft PR right away, then keep committing to it. Your work is backed up in the cloud from the first commit — never stuck only on your laptop.</p></div>
         <div class="card reveal d4"><span class="ico">🔀</span><h3>Merge, then start fresh</h3><p>Open the PR, get it merged, then cut a <b>new</b> small branch for the next thing.</p></div>
       </div>
-      <p class="golden reveal d4" style="margin-top:26px">Already 2 weeks deep on one giant branch? 😅 The way out: open a PR now, merge what's ready, then cut small branches from here. A short branch is easy to review — a giant one scares everyone, including you.</p>
+      <p class="golden reveal d4" style="margin-top:26px">Already deep on one giant branch? 😅 The way out: open a PR now, merge what's ready, then cut small branches from here. A short branch is easy to review — a giant one scares everyone, including you.</p>
       <div class="ck-note reveal d5"><span class="lab">You’ll do this</span><span>Like this: <code>ck-ux-full-design</code> designs only the flows your feature touches, nothing unrelated — the design side of “one branch, one thing.”</span></div>
     </div>
   </section>
@@ -582,7 +582,7 @@ h2.title .hl{color:var(--accent)}
             <li><span class="tick">2</span><div>Keep the text you want (often: keep both)</div></li>
             <li><span class="tick">3</span><div>Save, then stage &amp; commit to finish the merge — done. That's the whole "monster."</div></li>
           </ul>
-          <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>/sync</code> pulls the latest, merges main into your work, and walks you through exactly this — the same command from the loop.</span></div>
+          <div class="ck-note reveal d4"><span class="lab">You’ll do this</span><span><code>/ck-utility-sync</code> pulls the latest, merges main into your work, and walks you through exactly this — the same command from the loop.</span></div>
         </div>
       </div>
     </div>
