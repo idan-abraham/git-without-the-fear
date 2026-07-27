@@ -21,6 +21,10 @@ you for the first time on real work.
 | 3 | [The pull conflict](drill-3-pull-conflict.md) | "I ran `git pull` and everything exploded." | 8 min |
 | 4 | [The giant branch (and the way out)](drill-4-giant-branch.md) | "One branch, two weeks, everything in it. Nobody will review this." | 8 min |
 | 5 | [A PR is a conversation](drill-5-pr-conversation.md) | "I left a comment but ignored that I'm on a branch." | 8 min (needs GitHub) |
+| 6 | [Do it for real](drill-6-real-work.md) | "Fine in the sandbox — but can I do this on an actual Wix repo?" | 30 min (Creator Kit + Creators repo) |
+
+> **Drills 1–5** run in this safe sandbox repo. **Drill 6 is the graduation** — the
+> same loop on a *real* Wix repo with Creator Kit doing the Git for you. Do it last.
 
 ## Before you start
 Do these from **your own clone** of this repo, on **your own branch** — never

@@ -15,7 +15,7 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#070A1
 .g1{width:600px;height:600px;background:var(--accent);top:-220px;left:-140px}
 .g2{width:520px;height:520px;background:#7C3AED;bottom:-220px;right:-120px;animation-duration:17s;animation-delay:2s}
 @keyframes breathe{0%,100%{transform:scale(1);opacity:.38}50%{transform:scale(1.12);opacity:.52}}
-.wrap{position:relative;z-index:1;max-width:860px;width:100%;text-align:center}
+.wrap{position:relative;z-index:1;max-width:1000px;width:100%;text-align:center}
 .wixmark{display:inline-block;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;
   letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);border-radius:7px;
   padding:6px 12px;margin-bottom:22px;line-height:1;color:#3B82F6;animation:wixhue 4s linear infinite}
@@ -27,8 +27,8 @@ h1{font-family:'Wix Madefor Display',sans-serif;font-weight:800;line-height:1.03
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .strike{color:#4B5563;-webkit-text-fill-color:#4B5563;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:#DC2626}
 p.lead{color:#9FB0C3;font-size:clamp(15px,2vw,17px);line-height:1.6;max-width:48ch;margin:20px auto 0}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:36px 0 6px}
-@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0 6px}
+@media(max-width:760px){.cards{grid-template-columns:1fr}}
 a.card{position:relative;text-decoration:none;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
   border-radius:18px;padding:26px 24px;color:inherit;transition:transform .18s var(--ease),border-color .18s,background .18s,box-shadow .18s;overflow:hidden}
 a.card:hover{transform:translateY(-4px);border-color:rgba(122,171,255,.5);background:rgba(122,171,255,.07);box-shadow:0 22px 50px rgba(17,109,255,.22)}
@@ -45,7 +45,7 @@ a.card .tags span{font-family:'JetBrains Mono',monospace;font-size:11px;color:#C
 .note{margin-top:22px;font-size:13px;color:#5B6B80}
 .note b{color:#9FB0C3}
 .reveal{opacity:0;transform:translateY(16px);animation:rise .7s var(--ease) forwards}
-.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}.d5{animation-delay:.40s}
 @keyframes rise{to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.glow{animation:none}}
 </style></head>
@@ -54,7 +54,7 @@ a.card .tags span{font-family:'JetBrains Mono',monospace;font-size:11px;color:#C
 <div class="wrap">
   <div class="wixmark"><span style="animation-delay:0s">W</span><span style="animation-delay:.05s">i</span><span style="animation-delay:.1s">x</span><span style="animation-delay:.15s">&nbsp;</span><span style="animation-delay:.2s">C</span><span style="animation-delay:.25s">r</span><span style="animation-delay:.3s">e</span><span style="animation-delay:.35s">a</span><span style="animation-delay:.4s">t</span><span style="animation-delay:.45s">o</span><span style="animation-delay:.5s">r</span><span style="animation-delay:.55s">s</span></div>
   <h1 class="reveal">Learn Git by <span class="strike">fear</span> playing.</h1>
-  <p class="lead reveal d1">Two ways in. Watch the talk, or jump straight into the hands-on quest. Pick one to begin.</p>
+  <p class="lead reveal d1">Three steps to fearless. Watch the talk, play the hands-on quest, then take it to a real repo. Jump in anywhere.</p>
   <div class="cards">
     <a class="card reveal d2" href="/deck">
       <div class="ico">🖥️</div>
@@ -70,7 +70,14 @@ a.card .tags span{font-family:'JetBrains Mono',monospace;font-size:11px;color:#C
       <div class="tags"><span>⌨️ real commands</span><span>🗺️ live map</span><span>🎮 5 levels</span></div>
       <span class="go">Start the quest <span class="arw">→</span></span>
     </a>
+    <a class="card reveal d4" href="/real">
+      <div class="ico">🚀</div>
+      <h2>Do it for real</h2>
+      <p>The graduation: the same loop on a real Wix repo. Build with Creator Kit, open a PR, resolve a real merge conflict — nothing simulated.</p>
+      <div class="tags"><span>🛠️ creator kit</span><span>🌿 real repo</span><span>⏱️ ~30 min</span></div>
+      <span class="go">See the steps <span class="arw">→</span></span>
+    </a>
   </div>
-  <p class="note reveal d4">🔒 Wix employees only. Either path signs you in with your <b>@wix.com</b> Google account.</p>
+  <p class="note reveal d5">🔒 Wix employees only. Every path signs you in with your <b>@wix.com</b> Google account.</p>
 </div>
 </body></html>

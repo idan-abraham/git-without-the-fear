@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do it for real · Git Without the Fear</title>
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#116DFF;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#070A10;color:#E6EDF3;font-family:'Wix Madefor Text',system-ui,sans-serif;padding:40px 24px 72px;line-height:1.6}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000 18%,transparent 70%);pointer-events:none;z-index:0}
+.glow{position:fixed;border-radius:50%;filter:blur(90px);opacity:.34;pointer-events:none}
+.g1{width:560px;height:560px;background:var(--accent);top:-240px;left:-160px}
+.g2{width:480px;height:480px;background:#7C3AED;bottom:-240px;right:-140px}
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:#7AABFF;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13px;margin-bottom:28px}
+.back:hover{color:#A9C6FF}
+.eyebrow{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:12px}
+h1{font-family:'Wix Madefor Display',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-size:clamp(30px,5vw,48px);margin:0;background:linear-gradient(120deg,#fff 30%,#7AABFF 72%,#116DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#9FB0C3;font-size:clamp(15px,2vw,17.5px);max-width:60ch;margin:18px 0 0}
+.lead b{color:#E6EDF3}
+h2{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:22px;color:#fff;margin:44px 0 4px;letter-spacing:-.01em}
+.callout{margin:22px 0;border-radius:14px;padding:15px 18px;font-size:14px;color:#C7CDD6;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12)}
+.callout.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.32)}
+.callout.fire{background:rgba(220,38,38,.09);border-color:rgba(220,38,38,.34)}
+.callout b{color:#fff}
+code.k{font-family:'JetBrains Mono',monospace;font-size:.9em;background:rgba(17,109,255,.15);color:#9FC0FF;border:1px solid rgba(17,109,255,.28);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0 0;display:grid;gap:12px}
+.steps li{counter-increment:s;position:relative;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 20px 18px 62px}
+.steps li::before{content:counter(s);position:absolute;left:16px;top:16px;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(135deg,#116DFF,#7C3AED)}
+.steps h3{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:15.5px;color:#fff;margin:0 0 4px}
+.steps p{margin:0;color:#9FB0C3;font-size:13.8px}
+.steps .drillmap{display:inline-block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7AABFF;background:rgba(122,171,255,.09);border:1px solid rgba(122,171,255,.24);border-radius:999px;padding:3px 10px}
+.golden{margin:26px 0 0;border-left:3px solid var(--accent);background:rgba(17,109,255,.06);border-radius:0 12px 12px 0;padding:16px 20px;color:#C7CDD6;font-size:14.5px}
+.golden b{color:#fff}
+ul.plain{color:#9FB0C3;font-size:14.5px;padding-left:20px}
+ul.plain li{margin:8px 0}
+ul.plain b{color:#E6EDF3}
+.links{margin-top:40px;display:flex;gap:12px;flex-wrap:wrap}
+.links a{text-decoration:none;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13.5px;color:#E6EDF3;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:11px 16px;transition:border-color .18s,background .18s}
+.links a:hover{border-color:rgba(122,171,255,.5);background:rgba(122,171,255,.08)}
+footer{margin-top:52px;color:#5B6B80;font-size:12.5px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
+</style></head>
+<body>
+<div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
+<div class="wrap">
+  <a class="back" href="/">← Back</a>
+  <div class="eyebrow">The graduation · Drill 6</div>
+  <h1>Do it for real 🚀</h1>
+  <p class="lead">Every level in the Quest was practice in a safe sandbox. This is the <b>same loop</b> — branch, commit, push, PR, resolve a conflict — except now it's <b>Creator Kit building a real artifact in a real Wix repo</b>. Nothing simulated. You finish with a live Pull Request in <code class="k">wix-private/creators</code> with your name on it.</p>
+
+  <div class="callout">💡 <b>The one mindset shift:</b> you barely touch Git commands here. You tell Claude what you want and run <code class="k">/ck-*</code> commands — Creator Kit does the <code class="k">add</code> / <code class="k">commit</code> / <code class="k">push</code> / <code class="k">branch</code> under the hood. The Quest taught you the gears so this feels like <em>recognising</em> what's happening, not memorising it.</div>
+
+  <div class="callout warn">🔧 <b>Prerequisites (one-time):</b> Creator Kit installed, the <code class="k">creators</code> repo cloned, <code class="k">git</code>/<code class="k">gh</code> signed in, and push access to <code class="k">wix-private/creators</code>. Missing any? Sort it in <b>#creator-kit</b> before you start — don't stall on setup.</div>
+
+  <h2>The loop</h2>
+  <ol class="steps">
+    <li><h3>Get current — clean slate</h3><p>In your <code class="k">creators</code> clone, run <code class="k">/ck-utility-master</code>. It switches to <code class="k">master</code>, pulls the latest, and updates Creator Kit. Start clean, every time — the single most-skipped step.</p><span class="drillmap">↳ Level 1 · a branch is not a folder</span></li>
+    <li><h3>Start your piece — one branch, one thing</h3><p>Make your own folder <code class="k">projects/payments/&lt;yourname&gt;-&lt;topic&gt;/</code> so 20 people work at once without colliding. Open it, then <code class="k">/ck-new</code> — it creates your branch and project structure.</p><span class="drillmap">↳ Level 4 · one branch, one thing</span></li>
+    <li><h3>Build something real — one focused skill (~15 min)</h3><p>Run one skill and let it produce a real artifact: <code class="k">/ck-research-competitors</code> (or <code class="k">/ck-product-spec</code>, <code class="k">/ck-data-query</code>). Pick one — resist starting three. Creator Kit stages &amp; commits it for you.</p><span class="drillmap">↳ Level 2 · staging, done for you</span></li>
+    <li><h3>Draft PR early — back it up now</h3><p>Don't wait until you're "done": <code class="k">/ck-utility-pr</code> opens a <b>draft</b> Pull Request. The moment it exists, your work lives on GitHub — not just your laptop — and there's a link to share.</p><span class="drillmap">↳ Level 4 · the way out</span></li>
+    <li><h3>Keep going — push to the same PR</h3><p>Run a second skill or refine the first, then let Creator Kit push again. Reload the PR: the new commit is already there. No second PR, no lost work — the PR updates itself.</p></li>
+    <li><h3>The conversation — a PR is a comment thread</h3><p>Pair up. Comment on a neighbour's PR line. When one lands on yours, run <code class="k">/ck-utility-address-comments</code> — it reads each comment and helps you reply, usually with another commit to the same branch.</p><span class="drillmap">↳ Level 5 · a PR is a conversation</span></li>
+  </ol>
+
+  <h2>🔥 The conflict finale</h2>
+  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict. Here it is on a live repo, resolved by the one command that walks you through it.</p>
+  <div class="callout fire">
+    <b>Facilitator, once:</b> on <code class="k">master</code>, create <code class="k">projects/payments/_workshop-roster.md</code> with a shared line — <code class="k">**Last person to join:** (nobody yet)</code> — and push it before the session.<br><br>
+    <b>Everyone, on your branch:</b> change that shared line to your own name, add a row, let Creator Kit commit + push to your PR.<br><br>
+    <b>Facilitator, after everyone has branched:</b> change that same line on <code class="k">master</code> and push. Now <code class="k">master</code> and every branch disagree on the same line — a real divergence, on purpose.<br><br>
+    <b>Everyone, now run <code class="k">/ck-utility-sync</code>:</b> it pulls <code class="k">master</code> in, hits the conflict, and walks you through it — keep yours, take theirs, or combine. No panic, no <code class="k">git</code> surgery. The thing you dreaded is a guided two-minute step.
+  </div>
+  <div class="callout">🧑‍💻 <b>Solo / self-paced?</b> Play both roles: branch <code class="k">roster-a</code>, edit the line, merge its PR. Then on <code class="k">roster-b</code> edit the <em>same</em> line and <code class="k">/ck-utility-sync</code> — identical conflict, only you involved.</div>
+
+  <h2>What just happened</h2>
+  <ul class="plain">
+    <li>The daily loop is exactly the Quest loop: <b>get current → branch → build → draft PR → push more → resolve → merge.</b> Same six moves, real stakes.</li>
+    <li>Creator Kit runs the Git for you — including resolving conflicts. Knowing the gears is what lets you <b>trust</b> that, not fear it.</li>
+    <li>A draft PR from commit one means your work is backed up and shareable the whole time — never trapped on one laptop.</li>
+    <li>A PR is a conversation bolted to the actual change. You're already fluent in that.</li>
+  </ul>
+
+  <div class="golden"><b>🧹 When it's merged:</b> click GitHub's "Delete branch", then <code class="k">/ck-utility-master</code> for whatever's next.</div>
+
+  <div class="links">
+    <a href="https://github.com/wix-private/creators/tree/master/projects/payments" target="_blank" rel="noopener">📂 projects/payments →</a>
+    <a href="/play">🎮 Back to the Quest</a>
+  </div>
+
+  <footer>Part of <b>Git Without the Fear</b> · the workshop repo lives at <code>git-without-the-fear</code>.</footer>
+</div>
+</body></html>
