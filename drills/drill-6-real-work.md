@@ -93,36 +93,34 @@ GitHub is the same reflex attached to the real thing.
 
 ---
 
-## 🔥 The conflict finale (Drill 3, for real) — optional but do it
+## 🔥 The conflict finale (Drill 3) — do this in the sandbox
 
-The scariest sandbox drill was the pull conflict. Here's the same thing on a live
-repo, resolved by the one command Etay swears by.
+The scariest sandbox drill was the pull conflict, and it's the *one* step that fights
+you on a real repo: seeding and re-editing a shared line on `master` in `creators` needs
+push rights and code ownership most people don't have. So we rehearse the conflict where
+you're in full control — the safe sandbox — and then learn what the real-repo version
+looks like.
 
-**Facilitator setup (once):** on `master`, create `projects/general/git-workshop/_workshop-roster.md`
-with a single shared line near the top:
-```
-**Last person to join:** (nobody yet)
-```
-Push that to `master` **before** the session.
+**Do [Drill 3 — The pull conflict](drill-3-pull-conflict.md) now.** You'll trigger a
+real conflict on purpose, by yourself, and resolve it with three moves: open the file →
+delete the `<<<<<<<` / `=======` / `>>>>>>>` markers → keep the text you want →
+`add` + `commit`. That's the whole skill, and it's identical mechanically to what
+happens on a Wix repo.
 
-**Everyone, on your own branch:** open the roster, change that shared line to your own
-name, add a row to the table, and let Creator Kit commit + push it to your PR.
-
-**Facilitator, once everyone has branched:** change that same `Last person to join:`
-line on `master` to anything and push it. `master` and every open branch now disagree
-on the *same line* — a real divergence, on purpose.
-
-**Everyone, now run:**
+**Now connect it to real work.** On the `creators` repo you never touch those markers by
+hand. When your branch and `master` disagree, you run:
 ```
 /ck-utility-sync
 ```
-It pulls `master` into your branch, hits the conflict on that line, and **walks you
-through it** — keep yours, take theirs, or combine. No panic, no `git` surgery. That's
-the whole point: the conflict you dreaded is now a guided two-minute step.
+It pulls `master` into your branch, hits the conflict, and **walks you through the exact
+same choice** — keep yours, take theirs, or combine — then commits and pushes for you.
+Same decision you just made in the sandbox; Creator Kit does the `git` surgery. Knowing
+the gears from Drill 3 is what lets you *trust* that instead of fear it.
 
-> **Solo / self-paced?** Play both roles: make branch `roster-a`, edit the line, merge
-> its PR. Then on branch `roster-b` edit the *same* line and `/ck-utility-sync` — you'll
-> get the identical conflict with only yourself involved.
+> **Facilitators:** don't stage this on `master` in `creators` — branch protection and
+> code ownership will block the mid-session push. Run the conflict in the sandbox for the
+> whole room, then demo `/ck-utility-sync` on your own branch (or narrate it) so everyone
+> sees the real-repo version without anyone needing to write to `master`.
 
 ---
 

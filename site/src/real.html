@@ -66,14 +66,12 @@ footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
   </ol>
 
   <h2>🔥 The conflict finale</h2>
-  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict. Here it is on a live repo, resolved by the one command that walks you through it.</p>
+  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict — and it's the <em>one</em> step that fights you on a real repo: seeding and re-editing a shared line on <code class="k">master</code> in <code class="k">creators</code> needs push rights and code ownership most people don't have. So you rehearse the conflict where you're in full control — the Quest — then learn the real-repo version.</p>
   <div class="callout fire">
-    <b>Facilitator, once:</b> on <code class="k">master</code>, create <code class="k">projects/general/git-workshop/_workshop-roster.md</code> with a shared line — <code class="k">**Last person to join:** (nobody yet)</code> — and push it before the session.<br><br>
-    <b>Everyone, on your branch:</b> change that shared line to your own name, add a row, let Creator Kit commit + push to your PR.<br><br>
-    <b>Facilitator, after everyone has branched:</b> change that same line on <code class="k">master</code> and push. Now <code class="k">master</code> and every branch disagree on the same line — a real divergence, on purpose.<br><br>
-    <b>Everyone, now run <code class="k">/ck-utility-sync</code>:</b> it pulls <code class="k">master</code> in, hits the conflict, and walks you through it — keep yours, take theirs, or combine. No panic, no <code class="k">git</code> surgery. The thing you dreaded is a guided two-minute step.
+    <b>Rehearse it in the Quest:</b> replay the <b>pull-conflict level</b>. You trigger a real conflict on purpose, by yourself, and resolve it in three moves — open the file → delete the <code class="k">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code class="k">=======</code> / <code class="k">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers → keep the text you want → <code class="k">add</code> + <code class="k">commit</code>. Identical mechanically to what happens on a Wix repo.<br><br>
+    <b>Then connect it to real work:</b> on <code class="k">creators</code> you never touch those markers by hand. When your branch and <code class="k">master</code> disagree, run <code class="k">/ck-utility-sync</code> — it pulls <code class="k">master</code> in, hits the conflict, and walks you through the same choice (keep yours, take theirs, or combine), then commits and pushes for you. Same decision; Creator Kit does the <code class="k">git</code> surgery.
   </div>
-  <div class="callout">🧑‍💻 <b>Solo / self-paced?</b> Play both roles: branch <code class="k">roster-a</code>, edit the line, merge its PR. Then on <code class="k">roster-b</code> edit the <em>same</em> line and <code class="k">/ck-utility-sync</code> — identical conflict, only you involved.</div>
+  <div class="callout warn">🧑‍🏫 <b>Facilitators:</b> don't stage this on <code class="k">master</code> in <code class="k">creators</code> — branch protection and code ownership will block the mid-session push. Run the conflict in the Quest for the whole room, then demo <code class="k">/ck-utility-sync</code> on your own branch (or narrate it) so everyone sees the real-repo version without anyone writing to <code class="k">master</code>.</div>
 
   <h2>What just happened</h2>
   <ul class="plain">

@@ -25,6 +25,10 @@ you for the first time on real work.
 
 > **Drills 1–5** run in this safe sandbox repo. **Drill 6 is the graduation** — the
 > same loop on a *real* Wix repo with Creator Kit doing the Git for you. Do it last.
+>
+> **Note:** Drill 6's conflict finale runs *here* in the sandbox (Drill 3), not on the
+> real repo — `master` in `creators` is protected — with `/ck-utility-sync` shown as the
+> real-repo equivalent.
 
 ## Before you start
 Do these from **your own clone** of this repo, on **your own branch** — never
