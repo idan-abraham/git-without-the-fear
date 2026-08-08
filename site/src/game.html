@@ -450,10 +450,34 @@ function makeEngine(){
     if(tk[0]==='ls'){const fs=Object.keys(r.workdir);say(fs.length?fs.join('  '):'(empty)');return{lines:L};}
     if(tk[0]==='pwd'){say('~/git-without-the-fear');return{lines:L};}
     if(tk[0]==='clear'){return{lines:L,clear:true};}
-    if(tk[0]==='help'){say('Commands: git status | git checkout [-b] <branch> | git add <file>|. | git commit -m "msg" | git log [--oneline] [branch] | git merge <branch> | git merge --abort | git cherry-pick <id> | git push | echo "x" > file | cat <file> | ls','sys');return{lines:L};}
+    if(tk[0]==='help'){say('Commands: git status | git checkout [-b] <branch> (or git switch [-c]) | git branch [-D] <name> | git add <file>|.|-A | git commit -m "msg" (or -am) | git log [--oneline] [branch] | git merge <branch> | git merge --abort | git cherry-pick <id> | git push | echo "x" > file | cat <file> | ls','sys');return{lines:L};}
 
     if(tk[0]!=='git'){say(tk[0]+': command not found (this quest only speaks git + a little shell)','err');return{lines:L};}
     const sub=tk[1];const args=tk.slice(2);
+
+    // checkout & switch share one implementation, so both the classic and the modern path work.
+    const co=(name,create,baseName)=>{
+      if(!name){say('missing branch name','err');return{lines:L};}
+      if(r.merging){say('You are in the middle of a merge. Resolve it or run "git merge --abort".','err');return{lines:L};}
+      if(create){
+        if(r.branches[name]!==undefined){say("fatal: a branch named '"+name+"' already exists",'err');return{lines:L};}
+        let base=tip(r);
+        if(baseName!==undefined){ if(r.branches[baseName]===undefined){say("fatal: '"+baseName+"' is not a branch; cannot create '"+name+"' from it",'err');return{lines:L};} base=r.branches[baseName];r.workdir=clone(snap(r,base));r.stage=clone(snap(r,base)); }
+        r.branches[name]=base;r.order.push(name);r.HEAD=name;r.visited.add(name);
+        say("Switched to a new branch '"+name+"'",'ok');return{lines:L};
+      }
+      if(r.branches[name]===undefined){say("error: pathspec '"+name+"' did not match any branch",'err');return{lines:L};}
+      const h=headSnap(r),snapT=snap(r,r.branches[name]);
+      const files=new Set([...Object.keys(h),...Object.keys(r.workdir),...Object.keys(r.stage)]);
+      for(const f of files){const dirty=(r.workdir[f]!==h[f])||(r.stage[f]!==h[f]);if(dirty&&snapT[f]!==h[f]){say("error: Your local changes to '"+f+"' would be overwritten. Commit them first.",'err');return{lines:L};}}
+      const nw=clone(snapT),ns=clone(snapT);
+      for(const f of files){
+        if(r.workdir[f]!==h[f]){if(r.workdir[f]===undefined)delete nw[f];else nw[f]=r.workdir[f];}
+        if(r.stage[f]!==h[f]){if(r.stage[f]===undefined)delete ns[f];else ns[f]=r.stage[f];}
+      }
+      r.workdir=nw;r.stage=ns;r.HEAD=name;r.visited.add(name);r.switched.add(name);
+      say("Switched to branch '"+name+"'",'ok');return{lines:L};
+    };
 
     switch(sub){
       case 'status':{
@@ -474,45 +498,34 @@ function makeEngine(){
         return{lines:L};
       }
       case 'checkout':{
-        let name,create=false;
-        if(args[0]==='-b'){create=true;name=args[1];}else name=args[0];
-        if(!name){say('checkout: missing branch name','err');return{lines:L};}
-        if(r.merging){say('You are in the middle of a merge. Resolve it or run "git merge --abort".','err');return{lines:L};}
-        const st=status(r);
-        if(create){
-          if(r.branches[name]!==undefined){say("fatal: a branch named '"+name+"' already exists",'err');return{lines:L};}
-          const sp=args[2];let base=tip(r);
-          if(sp!==undefined){ if(r.branches[sp]===undefined){say("fatal: '"+sp+"' is not a branch; cannot create '"+name+"' from it",'err');return{lines:L};} base=r.branches[sp];r.workdir=clone(snap(r,base));r.stage=clone(snap(r,base)); }
-          r.branches[name]=base;r.order.push(name);r.HEAD=name;r.visited.add(name);
-          say("Switched to a new branch '"+name+"'",'ok');return{lines:L};
-        }
-        if(r.branches[name]===undefined){say("error: pathspec '"+name+"' did not match any branch",'err');return{lines:L};}
-        {
-          // git-accurate switch: carry uncommitted changes across; block only a real overwrite.
-          const h=headSnap(r),snapT=snap(r,r.branches[name]);
-          const files=new Set([...Object.keys(h),...Object.keys(r.workdir),...Object.keys(r.stage)]);
-          for(const f of files){const dirty=(r.workdir[f]!==h[f])||(r.stage[f]!==h[f]);if(dirty&&snapT[f]!==h[f]){say("error: Your local changes to '"+f+"' would be overwritten by checkout. Commit them first.",'err');return{lines:L};}}
-          const nw=clone(snapT),ns=clone(snapT);
-          for(const f of files){
-            if(r.workdir[f]!==h[f]){if(r.workdir[f]===undefined)delete nw[f];else nw[f]=r.workdir[f];}
-            if(r.stage[f]!==h[f]){if(r.stage[f]===undefined)delete ns[f];else ns[f]=r.stage[f];}
-          }
-          r.workdir=nw;r.stage=ns;r.HEAD=name;r.visited.add(name);r.switched.add(name);
-        }
-        say("Switched to branch '"+name+"'",'ok');return{lines:L};
+        // git checkout <branch> | git checkout -b <new> [<base>]
+        if(args[0]==='-b'||args[0]==='-B')return co(args[1],true,args[2]);
+        return co(args[0],false);
+      }
+      case 'switch':{
+        // modern equivalent: git switch <branch> | git switch -c <new>
+        if(args[0]==='-c'||args[0]==='-C'||args[0]==='--create')return co(args[1],true);
+        return co(args[0],false);
       }
       case 'add':{
         if(!args[0]){say('Nothing specified. Use "git add <file>" or "git add ."','err');return{lines:L};}
-        const targets=args[0]==='.'?Object.keys(r.workdir):args;
+        const all=(args[0]==='.'||args[0]==='-A'||args[0]==='--all');
+        const targets=all?Object.keys(r.workdir):args;
         for(const f of targets){
-          if(r.workdir[f]===undefined&&args[0]!=='.'){say("fatal: pathspec '"+f+"' did not match any files",'err');return{lines:L};}
+          if(r.workdir[f]===undefined&&!all){say("fatal: pathspec '"+f+"' did not match any files",'err');return{lines:L};}
           r.stage[f]=r.workdir[f];
           if(r.merging){r.merging.conflicts=r.merging.conflicts.filter(x=>x!==f);}
         }
         return{lines:L};
       }
       case 'commit':{
-        let msg=null;const mi=args.indexOf('-m');if(mi>=0)msg=args[mi+1];
+        let msg=null,stageAll=false;
+        for(let i=0;i<args.length;i++){const a=args[i];
+          if(a==='-m'||a==='--message'){msg=args[i+1];i++;}
+          else if(a==='-a'||a==='--all'){stageAll=true;}
+          else if(a==='-am'||a==='-ma'){stageAll=true;msg=args[i+1];i++;}
+        }
+        if(stageAll){const hs=headSnap(r);for(const f of new Set([...Object.keys(hs),...Object.keys(r.workdir)])){if(hs[f]!==undefined){if(r.workdir[f]===undefined)delete r.stage[f];else r.stage[f]=r.workdir[f];}}}
         if(!msg){say('Aborting: use   git commit -m "your message"','err');return{lines:L};}
         if(r.merging&&r.merging.conflicts.length){say('error: Committing is not possible because you have unmerged files.','err');say('  resolve the markers, then "git add" the file(s).','cm');return{lines:L};}
         // block if a conflicted file still has markers and wasn't re-added
@@ -836,18 +849,24 @@ window.GIT=makeEngine();
   // own AI agent and gets taught the move, instead of the emulator handing it over.
   function stripTags(s){return String(s).replace(/<[^>]*>/g,'');}
   function cleanGoal(l){return stripTags(l).replace(/\s*\([^)]*\)/g,'').trim();} // drop "(git push)"-style leaks
+  // The simulator understands only this classic subset — the prompt must pin the AI to it,
+  // or it suggests modern equivalents (e.g. `git switch`) that the emulator rejects.
+  const SIM_CMDS='git status · git checkout [-b] <branch>  (or git switch [-c] <branch>) · git branch [-D] <name> · git add <file> | . | -A · git commit -m "msg"  (or -am) · git log [--oneline] [branch] · git merge <branch> · git merge --abort · git cherry-pick <id> · git push · echo "text" > file (>> appends) · cat <file> · ls';
   function buildPrompt(lv,r){
     const gs=lv.goals(r);
     const done=gs.filter(g=>g.done).map(g=>cleanGoal(g.label));
     const next=gs.find(g=>!g.done);
     return [
-      "I'm learning Git in a hands-on exercise — a simulated repo that runs real git commands (git plus a little shell, nothing exotic).",
+      "I'm learning Git in a hands-on exercise — a simulated repo that runs a small, classic set of real git commands.",
+      '',
+      'It accepts this set — there’s often more than one valid way (e.g. `git checkout -b` and `git switch -c` both work). Stick to these:',
+      SIM_CMDS,
       '',
       'The scenario: '+stripTags(lv.obj),
       'What I’ve done so far: '+(done.length?done.join('; '):'nothing yet')+'.',
       'What I’m stuck on next: '+(next?cleanGoal(next.label):'wrapping up the last step')+'.',
       '',
-      'Teach me: explain what’s happening and why, then guide me to the git command to run next and what it does — don’t just paste the command with no explanation.'
+      'Teach me: explain what’s happening and why, then guide me to the next command from that list and what it does — don’t just paste the command with no explanation.'
     ].join('\n');
   }
   function copyText(t,btn){
