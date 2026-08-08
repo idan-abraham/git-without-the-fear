@@ -1,143 +1,153 @@
-# Drill 6 — Do it for real 🚀 (Creator Kit + the Creators repo)
+# Drill 6 — Do it for real 🚀 (a real PR, by hand)
 
-**The graduation.** Every earlier drill was practice in a safe sandbox. This one
-runs the *exact same loop* — branch, commit, push, PR, resolve a conflict — except
-now it's **Creator Kit building a real artifact in a real Wix repo**. Nothing here
-is simulated. At the end you'll have a live Pull Request in
-[`wix-private/creators`](https://github.com/wix-private/creators) with your name on it.
+**The graduation.** Every earlier drill was practice in a safe sandbox. This one runs
+the *exact same loop* — branch, commit, push, PR, resolve a conflict — on a **real
+GitHub repo, by hand**. Nothing here is simulated. At the end you'll have a **live Pull
+Request with your name on it**, and you'll have resolved a **real merge conflict**.
 
-**The one mindset shift:** you barely touch Git commands here. You tell Claude what
-you want and run `/ck-*` commands — Creator Kit does the `add` / `commit` / `push` /
-`branch` under the hood. The emulator taught you the gears so this feels like
-*recognising* what's happening, not *memorising* it.
+We run it on the **workshop repo** you already cloned for Drills 1–5
+(`git-without-the-fear`) — a safe, shared training repo, never a production one. You work
+in your own folder so 20 people can go at once without colliding.
 
-> **Prerequisites (one-time, assumed done):** Creator Kit installed, the `creators`
-> repo cloned, `git`/`gh` signed in, and push access to `wix-private/creators`. If
-> any of that isn't true, sort it in **#creator-kit** before the session — don't
-> stall the room on setup.
+> **The one idea:** this is the same six moves from the emulator, now with real stakes.
+> The emulator taught you the gears; here you turn them on an actual repo. At Wix, tooling
+> like **Creator Kit** (`/ck-new`, `/ck-utility-pr`, `/ck-utility-sync`) runs these exact
+> git steps for you — you're about to do them by hand, so you'll *recognise* what that
+> tooling is doing instead of trusting it blindly.
+
+> **Prerequisites (~5 min, see [SETUP.md](../SETUP.md)):** `git` installed, a GitHub
+> account, this repo cloned, and collaborator access (send the facilitator your GitHub
+> username) — or use the **Fork** fallback from the main README. `gh` (GitHub CLI) is
+> handy but optional; you can always open the PR in the browser.
 
 ---
 
 ## Do this
 
 ### 1. Get current — clean slate
-
-In your `creators` clone, run:
 ```
-/ck-utility-master
+git checkout main
+git pull
 ```
-This switches you to `master`, pulls the latest, and updates Creator Kit. This is
-**Drill 1 for real**: `master` is one line of work, not a folder of your stuff. You
-start clean, every time. *(Make it a daily habit — it's the single most-skipped step
-and the #1 cause of painful conflicts later.)*
+`main` is one shared line of work, not a folder of your stuff. Start clean, every time —
+it's the single most-skipped step and the #1 cause of painful conflicts later.
+*(↳ Level 1 — a branch is not a folder.)*
 
 ### 2. Start your piece — one branch, one thing
-
-Make **your own** feature folder inside the payments domain so 20 people can work at
-once without colliding:
+Give yourself a branch named for you and one small topic:
 ```
-projects/general/git-workshop/<yourname>-<short-topic>/
+git switch -c dana-first-pr
 ```
-e.g. `projects/general/git-workshop/dana-express-checkout-scan/`. Open that folder, then:
+*(`git checkout -b dana-first-pr` does the same thing.)* Then make **your own** folder so
+nobody collides:
 ```
-/ck-new
+workshop/dana-first-pr/
 ```
-Answer the short intent conversation (pick **a single task/skill**, not a whole
-feature). Creator Kit creates your branch and the project structure. This is
-**Drill 4's "one branch, one thing"**: your folder is your one piece of work — not
-two weeks of everything piled together.
+One branch = one piece of work — not two weeks of everything piled together.
+*(↳ Level 4 — one branch, one thing.)*
 
-### 3. Build something real — one focused skill (~15 min)
-
-Run **one** skill and let it produce a real artifact:
+### 3. Build something real — commit as you go
+Put a real file in your folder (a note, a checklist, anything that's *yours*):
 ```
-/ck-research-competitors
+echo "# Dana's first real PR" > workshop/dana-first-pr/notes.md
+git add workshop/dana-first-pr/notes.md
+git commit -m "Add Dana's notes"
 ```
-> Prefer a different 25-minute task? `/ck-product-spec`, `/ck-data-query`, or
-> `/ck-ux-content` all work the same way. Pick one — resist starting three.
+`git add` curates exactly what goes into the snapshot; `git status` and
+`git log --oneline` tell you the truth at any point. *(↳ Level 2 — staging.)*
 
-When it finishes you'll have a real file under `artifacts/`. Behind the scenes
-Creator Kit already staged and committed it — that's **Drill 2 (staging)** happening
-for you. Peek if you're curious: `git status` and `git log --oneline` still tell the
-truth, exactly like in the sandbox.
-
-### 4. Draft PR early — back it up in the cloud *now*
-
+### 4. Draft PR early — back it up now
 Don't wait until you're "done":
 ```
-/ck-utility-pr
+git push -u origin dana-first-pr
+gh pr create --draft --fill
 ```
-This opens a **draft Pull Request**. The moment it exists, your work lives on GitHub,
-not just your laptop — and there's a link you can share. This is the deck's
-*"open a draft PR early"* habit and **Drill 4's way out** rolled into one: you're
-never more than a commit away from a backup, and the branch stays small and reviewable.
+No `gh`? `git push` prints a link — open it and click **Create draft pull request**. The
+moment the PR exists, your work lives on GitHub, not just your laptop, and you have a link
+to share. *(↳ Level 4 — the way out.)*
 
-### 5. Keep going — push more commits to the *same* PR
-
-Run a second skill or refine the first, then let Creator Kit push again. Reload your
-PR in the browser: the new commit is **already there**. No second PR, no lost work —
-the PR updates itself. This is the loop Etay described: keep pushing the next commits
-to the same PR so your state is always on GitHub, never only local.
+### 5. Keep going — push more to the *same* PR
+Add or change something, then:
+```
+git add .
+git commit -m "Refine notes"
+git push
+```
+Reload the PR in the browser: the new commit is **already there**. No second PR, no lost
+work — the PR updates itself.
 
 ### 6. The conversation — a PR is a comment thread
-
-Pair up. Open a neighbour's PR → **Files changed** → hover a line → leave a comment
-(*"nice — can you add one competitor for X?"*). On your own PR, when a comment lands:
-```
-/ck-utility-address-comments
-```
-It reads each comment and helps you respond — usually with **another commit to the
-same branch**. This is **Drill 5 for real**: the ask, your fix, and the resolution
-all stay attached to the change, forever. You already do this in Docs and Figma;
-GitHub is the same reflex attached to the real thing.
+Pair up. Open a neighbour's PR → **Files changed** → hover a line → leave a comment. When a
+comment lands on yours, answer it **with another commit** (`git commit` → `git push`) — the
+ask, your fix, and the resolution stay attached to the change forever. You already do this
+in Docs and Figma; GitHub is the same reflex on the real thing. *(↳ Level 5 — a PR is a
+conversation.)*
 
 ---
 
-## 🔥 The conflict finale (Drill 3) — do this in the sandbox
+## 🔥 The conflict finale (Level 3, for real) — do it
 
-The scariest sandbox drill was the pull conflict, and it's the *one* step that fights
-you on a real repo: seeding and re-editing a shared line on `master` in `creators` needs
-push rights and code ownership most people don't have. So we rehearse the conflict where
-you're in full control — the safe sandbox — and then learn what the real-repo version
-looks like.
+The scariest emulator level was the pull conflict. Here it is on the live repo — and
+because the facilitator owns this repo's `main`, we can trigger a *real* divergence on
+purpose and resolve it together.
 
-**Do [Drill 3 — The pull conflict](drill-3-pull-conflict.md) now.** You'll trigger a
-real conflict on purpose, by yourself, and resolve it with three moves: open the file →
-delete the `<<<<<<<` / `=======` / `>>>>>>>` markers → keep the text you want →
-`add` + `commit`. That's the whole skill, and it's identical mechanically to what
-happens on a Wix repo.
-
-**Now connect it to real work.** On the `creators` repo you never touch those markers by
-hand. When your branch and `master` disagree, you run:
+**Everyone, on your branch:** open [`conflict-zone/guestbook.md`](../conflict-zone/guestbook.md)
+and change the single line
 ```
-/ck-utility-sync
+- 🕶️ The instructor was here first.
 ```
-It pulls `master` into your branch, hits the conflict, and **walks you through the exact
-same choice** — keep yours, take theirs, or combine — then commits and pushes for you.
-Same decision you just made in the sandbox; Creator Kit does the `git` surgery. Knowing
-the gears from Drill 3 is what lets you *trust* that instead of fear it.
+to your own name (e.g. `- 🕶️ Dana was here`), then commit + push to your PR.
 
-> **Facilitators:** don't stage this on `master` in `creators` — branch protection and
-> code ownership will block the mid-session push. Run the conflict in the sandbox for the
-> whole room, then demo `/ck-utility-sync` on your own branch (or narrate it) so everyone
-> sees the real-repo version without anyone needing to write to `master`.
+**Facilitator, once everyone has edited that line:** change the *same* line on `main` to
+anything and push it. Now `main` and every open branch disagree on the **same line** — a
+real conflict, on purpose.
+
+**Everyone, now pull `main` in:**
+```
+git merge main
+```
+Git stops with `CONFLICT (content): Merge conflict in conflict-zone/guestbook.md`. Don't
+panic — run `git status`, open the file, and you'll see the question:
+```
+<<<<<<< HEAD
+- 🕶️ Dana was here
+=======
+- 🕶️ <facilitator's line>
+>>>>>>> main
+```
+Delete the three marker lines, keep the text you want (keeping both is easiest), then:
+```
+git add conflict-zone/guestbook.md
+git commit -m "Resolve guestbook conflict: keep both"
+git push
+```
+That's the whole monster: two people edited the same line, and Git asked a human to
+choose. *(↳ Level 3.)*
+
+> 🧯 **Escape hatch:** `git merge --abort` puts everything back exactly as before the
+> merge. Nothing is lost. Breathe, then try again.
+>
+> 🧑‍💻 **Solo / self-paced?** Play both roles: make a `roster-a` branch, edit the line,
+> merge its PR to `main`. Then on a `roster-b` branch edit the *same* line and
+> `git merge main` — you'll get the identical conflict with only yourself involved.
 
 ---
 
 ## What just happened (the whole point)
 
-- The daily loop is exactly the sandbox loop: **get current → branch → build →
-  draft PR → push more → resolve → merge.** Same six moves, real stakes.
-- Creator Kit runs the Git for you. You mostly say what you want and run `/ck-*`
-  commands — including resolving merge conflicts. Knowing the gears (from the drills)
-  is what lets you *trust* that, not fear it.
-- A draft PR from commit one means your work is backed up and shareable the whole
+- The daily loop is exactly the emulator loop: **get current → branch → build → draft PR →
+  push more → resolve → merge.** Same six moves, real stakes.
+- You did every git step **by hand** — so when Wix tooling like **Creator Kit** does
+  `add` / `commit` / `push` / `branch` and conflict-resolution for you (`/ck-new`,
+  `/ck-utility-pr`, `/ck-utility-sync`), you'll recognise the gears instead of fearing them.
+- A **draft PR from commit one** means your work is backed up and shareable the whole
   time — never trapped on one laptop.
-- A PR is a conversation bolted to the actual change. You're already fluent in that.
+- A PR is a **conversation bolted to the actual change.** You're already fluent in that.
 
 ## Clean up (optional)
-Once your PR is reviewed and merged, GitHub offers **"Delete branch"** — click it.
-Then get current again for whatever's next:
+Once your PR is reviewed and merged, GitHub offers **"Delete branch"** — click it. Then get
+current again for whatever's next:
 ```
-/ck-utility-master
+git checkout main
+git pull
 ```
