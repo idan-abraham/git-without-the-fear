@@ -9,6 +9,10 @@ loop developers do every day:
 
 No prior experience needed. If you get stuck, raise your hand — a mentor will come over.
 
+> 🎮 **Prefer to see it first?** There's an interactive companion — a short talk, a hands-on
+> terminal **Quest** (a safe Git emulator you can't break), and this real drill — at
+> **[git-without-fear.com](https://git-without-fear.com)** *(Wix employees — sign in with your @wix.com account)*.
+
 ---
 
 ## Before you start (2 minutes)
@@ -34,6 +38,7 @@ Use your name so it's unique (lowercase, dashes instead of spaces):
 ```bash
 git checkout -b add-jane-doe
 ```
+*(On newer Git, `git switch -c add-jane-doe` does exactly the same thing.)*
 
 ### Step 3 — Make your file
 Copy the template into the `exercises/` folder and rename it to your name:
@@ -73,8 +78,9 @@ resolving one together — it's far less scary than it looks. Instructions are i
 Once the basic loop feels comfortable, the [`drills/`](drills/) folder recreates the
 *real* confusions people hit — branch-vs-folder, staging, pull conflicts, the
 two-week giant branch, and the PR-as-conversation. Each one triggers the scary
-thing on purpose (safely) and walks you back out. All doable solo. Start at
-[`drills/README.md`](drills/README.md).
+thing on purpose (safely) and walks you back out. All doable solo. Then
+**[Drill 6 — Do it for real](drills/drill-6-real-work.md)** takes the whole loop to a
+real Pull Request on this repo. Start at [`drills/README.md`](drills/README.md).
 
 ---
 
@@ -89,7 +95,7 @@ thing on purpose (safely) and walks you back out. All doable solo. Start at
 | I want to… | Command |
 |---|---|
 | Copy the repo down | `git clone <url>` |
-| Start my own line of work | `git checkout -b my-branch` |
+| Start my own line of work | `git checkout -b my-branch` (or `git switch -c my-branch`) |
 | See what changed | `git status` |
 | Stage a file | `git add <file>` |
 | Save a snapshot | `git commit -m "message"` |
