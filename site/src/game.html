@@ -138,6 +138,18 @@ header.top{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding:
 .nextstep .toggle:hover{border-color:var(--accent);color:var(--text-2)}
 .nextstep .x{margin-left:auto;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px}
 .nextstep .x:hover{color:#fff}
+/* teach-me reveal: a copyable prompt for the player's own AI, command hidden behind a last-resort click */
+.nextstep .ai{flex:1 1 100%;display:flex;flex-direction:column;gap:9px}
+.nextstep .ai .hd{font-size:12.5px;color:var(--text-2);line-height:1.5}
+.nextstep .ai .hd b{color:#fff}
+.nextstep .prompt{font-family:var(--mono);font-size:11.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;background:var(--ink);border:1px solid var(--line-2);border-radius:9px;padding:11px 12px;color:var(--text-2)}
+.nextstep .copy{align-self:flex-start;font-family:var(--disp);font-weight:800;font-size:11.5px;background:var(--accent);border:1px solid var(--accent-light);color:#fff;border-radius:8px;padding:6px 13px;cursor:pointer;transition:.15s}
+.nextstep .copy:hover{transform:translateY(-1px)}
+.nextstep .copy.copied{background:var(--green);border-color:var(--green)}
+.nextstep .fb{align-self:flex-start;background:transparent;border:none;color:var(--muted);font-size:11.5px;cursor:pointer;padding:2px 0;text-decoration:underline dotted}
+.nextstep .fb:hover{color:var(--text-2)}
+.nextstep .cmdbox{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.25);border-radius:8px;padding:9px 11px}
+.nextstep .cmdbox .txt{flex:1 1 100%;font-family:var(--body);font-size:11.5px;color:var(--amber);line-height:1.5}
 
 /* PR panel (level 5) */
 .pr{border-top:1px solid var(--line);background:var(--panel);padding:14px 18px;display:none}
@@ -756,7 +768,7 @@ window.GIT=makeEngine();
   const out=$('#out'),cmd=$('#cmd');
 
   function loadLevel(i){
-    cur=i;showNext=false;
+    cur=i;showNext=false;showCmd=false;
     repo=E.createRepo();
     LEVELS[i].setup(repo);
     prevGoalDone=[];prevGraphIds=new Set(reachable(repo)); // starting nodes are not "new"
@@ -818,24 +830,68 @@ window.GIT=makeEngine();
     return s.split(/\s*(?:→|…|\bthen\b)\s*/i).map(oneCmd).filter(Boolean);
   }
   let showNext=false; // stays collapsed until the player asks — lean, non-spoiler by default
+  let showCmd=false;  // the actual command stays hidden behind an extra, last-resort click
+  // Build a self-contained teaching prompt from the level's plain-language objective +
+  // goal state. Deliberately contains NO git command — the player pastes it into their
+  // own AI agent and gets taught the move, instead of the emulator handing it over.
+  function stripTags(s){return String(s).replace(/<[^>]*>/g,'');}
+  function cleanGoal(l){return stripTags(l).replace(/\s*\([^)]*\)/g,'').trim();} // drop "(git push)"-style leaks
+  function buildPrompt(lv,r){
+    const gs=lv.goals(r);
+    const done=gs.filter(g=>g.done).map(g=>cleanGoal(g.label));
+    const next=gs.find(g=>!g.done);
+    return [
+      "I'm learning Git in a hands-on exercise — a simulated repo that runs real git commands (git plus a little shell, nothing exotic).",
+      '',
+      'The scenario: '+stripTags(lv.obj),
+      'What I’ve done so far: '+(done.length?done.join('; '):'nothing yet')+'.',
+      'What I’m stuck on next: '+(next?cleanGoal(next.label):'wrapping up the last step')+'.',
+      '',
+      'Teach me: explain what’s happening and why, then guide me to the git command to run next and what it does — don’t just paste the command with no explanation.'
+    ].join('\n');
+  }
+  function copyText(t,btn){
+    const ok=()=>{btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Copy prompt';btn.classList.remove('copied');},1600);};
+    const fb=()=>{try{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);}catch(e){}};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,()=>{fb();ok();});}
+    else{fb();ok();}
+  }
   function renderNext(){
     const el=$('#nextstep');if(!el)return;
-    const done=LEVELS[cur].goals(repo).every(g=>g.done);
-    if(done){el.className='nextstep done';el.innerHTML='<span class="lbl">✓ Cleared</span>';showNext=false;return;}
+    const lv=LEVELS[cur];
+    const done=lv.goals(repo).every(g=>g.done);
+    if(done){el.className='nextstep done';el.innerHTML='<span class="lbl">✓ Cleared</span>';showNext=false;showCmd=false;return;}
     if(!showNext){
       el.className='nextstep collapsed';el.innerHTML='';
-      const t=document.createElement('button');t.type='button';t.className='toggle';t.textContent='🧭 Stuck? Reveal next step';
+      const t=document.createElement('button');t.type='button';t.className='toggle';t.textContent='🧭 Stuck? Ask your AI';
       t.onclick=()=>{showNext=true;renderNext();cmd.focus();};el.appendChild(t);return;
     }
     el.className='nextstep';
-    const h=LEVELS[cur].hint(repo);
-    el.innerHTML='<span class="lbl">▸ Next</span><span class="txt">'+esc(h)+'</span>';
-    hintCmds(h).forEach(c=>{
-      const b=document.createElement('button');b.type='button';b.className='fill';b.textContent='⏎ '+c;
-      b.title='Fill this command into the terminal';b.onclick=()=>{cmd.value=c;cmd.focus();};el.appendChild(b);
-    });
-    const x=document.createElement('button');x.type='button';x.className='x';x.setAttribute('aria-label','Hide next step');x.textContent='×';
-    x.onclick=()=>{showNext=false;renderNext();cmd.focus();};el.appendChild(x);
+    el.innerHTML='<span class="lbl">▸ Learn it</span>';
+    const ai=document.createElement('div');ai.className='ai';
+    const hd=document.createElement('div');hd.className='hd';
+    hd.innerHTML='Don’t guess — <b>paste this into Claude (or your AI agent)</b> and let it walk you through the move:';
+    ai.appendChild(hd);
+    const promptText=buildPrompt(lv,repo);
+    const pr=document.createElement('div');pr.className='prompt';pr.textContent=promptText;ai.appendChild(pr);
+    const cp=document.createElement('button');cp.type='button';cp.className='copy';cp.textContent='📋 Copy prompt';
+    cp.onclick=()=>copyText(promptText,cp);ai.appendChild(cp);
+    if(!showCmd){
+      const fbtn=document.createElement('button');fbtn.type='button';fbtn.className='fb';fbtn.textContent='still stuck? show the command ▾';
+      fbtn.onclick=()=>{showCmd=true;renderNext();};ai.appendChild(fbtn);
+    }else{
+      const h=lv.hint(repo);
+      const box=document.createElement('div');box.className='cmdbox';
+      box.innerHTML='<span class="txt">'+esc(h)+'</span>';
+      hintCmds(h).forEach(c=>{
+        const b=document.createElement('button');b.type='button';b.className='fill';b.textContent='⏎ '+c;
+        b.title='Fill this command into the terminal';b.onclick=()=>{cmd.value=c;cmd.focus();};box.appendChild(b);
+      });
+      ai.appendChild(box);
+    }
+    el.appendChild(ai);
+    const x=document.createElement('button');x.type='button';x.className='x';x.setAttribute('aria-label','Hide');x.textContent='×';
+    x.onclick=()=>{showNext=false;showCmd=false;renderNext();cmd.focus();};el.appendChild(x);
   }
   function renderHead(){$('#headBadge').textContent='HEAD → '+repo.HEAD;$('#objTitle').innerHTML=LEVELS[cur].emoji+' '+esc(LEVELS[cur].title);$('#objDesc').innerHTML=LEVELS[cur].obj;}
   function renderGoals(){
