@@ -28,4 +28,4 @@ politely asking a human to sort it out.
 
 ## Guestbook — SIGN HERE (everyone changes the SAME line below to their own name)
 
-- 🕶️ The instructor was here first.
+- 🕶️ The instructor moved this line — now go resolve the conflict! 🔥
