@@ -89,22 +89,20 @@ conversation.)*
 
 ## 🔥 The conflict finale (Level 3, for real) — do it
 
-The scariest emulator level was the pull conflict. Here it is on the live repo — and
-because the facilitator owns this repo's `main`, we can trigger a *real* divergence on
-purpose and resolve it together.
+The scariest emulator level was the pull conflict. Here it's real, on the live repo — you'll
+hit a genuine conflict on purpose and resolve it yourself.
 
-**Everyone, on your branch:** open [`conflict-zone/guestbook.md`](../conflict-zone/guestbook.md)
+**1. Sign the shared line.** On your branch, open [`conflict-zone/guestbook.md`](../conflict-zone/guestbook.md)
 and change the single line
 ```
 - 🕶️ The instructor was here first.
 ```
-to your own name (e.g. `- 🕶️ Dana was here`), then commit + push to your PR.
+to your own name (e.g. `- 🕶️ Dana was here`). Then `git add` → `git commit` → `git push` to your PR.
 
-**Facilitator, once everyone has edited that line:** change the *same* line on `main` to
-anything and push it. Now `main` and every open branch disagree on the **same line** — a
-real conflict, on purpose.
+**2. Wait for the go-ahead.** Your facilitator changes that *same* line on `main`. Now `main`
+and your branch disagree on the **exact same line** — the conflict, set up on purpose.
 
-**Everyone, now pull `main` in:**
+**3. Pull it in and resolve.**
 ```
 git merge main
 ```
