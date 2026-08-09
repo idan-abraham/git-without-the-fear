@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick something to build · Git Without the Fear</title>
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#116DFF;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#070A10;color:#E6EDF3;font-family:'Wix Madefor Text',system-ui,sans-serif;padding:40px 24px 72px;line-height:1.6}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000 18%,transparent 70%);pointer-events:none;z-index:0}
+.glow{position:fixed;border-radius:50%;filter:blur(90px);opacity:.34;pointer-events:none}
+.g1{width:560px;height:560px;background:var(--accent);top:-240px;left:-160px}
+.g2{width:480px;height:480px;background:#7C3AED;bottom:-240px;right:-140px}
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:#7AABFF;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13px;margin-bottom:28px}
+.back:hover{color:#A9C6FF}
+.eyebrow{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:12px}
+h1{font-family:'Wix Madefor Display',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-size:clamp(30px,5vw,46px);margin:0;background:linear-gradient(120deg,#fff 30%,#7AABFF 72%,#116DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#9FB0C3;font-size:clamp(15px,2vw,17px);max-width:66ch;margin:18px 0 0}
+.lead b{color:#E6EDF3}
+code.k{font-family:'JetBrains Mono',monospace;font-size:.9em;background:rgba(17,109,255,.15);color:#9FC0FF;border:1px solid rgba(17,109,255,.28);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.callout{margin:24px 0 6px;border-radius:14px;padding:15px 18px;font-size:14px;color:#C7CDD6;background:rgba(17,109,255,.06);border:1px solid rgba(17,109,255,.22);border-left:3px solid var(--accent)}
+.callout b{color:#fff}
+.seclbl{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7AABFF;margin:34px 0 12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.fcard{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;transition:border-color .18s,transform .18s}
+.fcard:hover{border-color:rgba(122,171,255,.45);transform:translateY(-2px)}
+.fcard h3{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:15.5px;color:#fff;margin:0;display:flex;align-items:center;gap:9px;line-height:1.25}
+.fcard p{margin:0;color:#9FB0C3;font-size:13.5px;line-height:1.5}
+.fcard .art{margin-top:auto;font-size:12.5px;color:#C7CDD6;border-top:1px solid rgba(255,255,255,.08);padding-top:9px}
+.fcard .art b{color:#7AABFF;font-weight:700}
+.links{margin-top:44px;display:flex;gap:12px;flex-wrap:wrap}
+.links a{text-decoration:none;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13.5px;color:#E6EDF3;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:11px 16px;transition:border-color .18s,background .18s}
+.links a:hover{border-color:rgba(122,171,255,.5);background:rgba(122,171,255,.08)}
+footer{margin-top:40px;color:#5B6B80;font-size:12.5px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+</style></head>
+<body>
+<div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
+<div class="wrap">
+  <a class="back" href="/creators/real">← Back to the drill</a>
+  <div class="eyebrow">Pick your topic</div>
+  <h1>Pick something to build 🧠</h1>
+  <p class="lead">Doing the <b>real drill</b>? Don't overthink your file. Pick one <b>Wix AI feature</b> below and write a quick <b>one-pager</b> on it — <b>what it does · who it's for · the key AI prompt or user flow</b>. Then commit it, push it, and open your PR. Your first real PR, with something real in it.</p>
+
+  <div class="callout">📝 <b>Your artifact (~10–15 min):</b> a short markdown file in your folder — <code class="k">workshop/&lt;yourname&gt;-&lt;topic&gt;/idea.md</code>. Keep it to one page. The point is the loop — branch → commit → PR — so don't polish, ship it.</div>
+
+  <div class="seclbl">Site &amp; content</div>
+  <div class="cards">
+    <div class="fcard"><h3>🪄 Site from a sentence</h3><p>Describe your business in one line → a full first-draft site.</p><div class="art"><b>Artifact:</b> the 3 questions the AI must ask + the onboarding flow.</div></div>
+    <div class="fcard"><h3>✍️ Product-description writer</h3><p>SEO-ready product copy from a photo and a few specs.</p><div class="art"><b>Artifact:</b> the prompt + 2 input→output examples.</div></div>
+    <div class="fcard"><h3>🎨 Brand-kit generator</h3><p>Logo, palette, and fonts from a vibe you describe.</p><div class="art"><b>Artifact:</b> the user flow + 2 guardrails.</div></div>
+  </div>
+
+  <div class="seclbl">Commerce &amp; growth</div>
+  <div class="cards">
+    <div class="fcard"><h3>📅 Booking assistant</h3><p>A chat that books, reschedules, and sends reminders.</p><div class="art"><b>Artifact:</b> the happy path + one edge case.</div></div>
+    <div class="fcard"><h3>✉️ Email-campaign generator</h3><p>Turn a promo into a full email + subject-line options.</p><div class="art"><b>Artifact:</b> the spec + a success metric.</div></div>
+    <div class="fcard"><h3>🔎 SEO copilot</h3><p>Audits a page and returns fixes in priority order.</p><div class="art"><b>Artifact:</b> the prioritized checklist it outputs.</div></div>
+  </div>
+
+  <div class="seclbl">Payments &amp; Capital</div>
+  <div class="cards">
+    <div class="fcard"><h3>💳 Checkout optimizer</h3><p>Prefill and reorder checkout to cut drop-off.</p><div class="art"><b>Artifact:</b> the AI's inputs + a guardrail (never hide fees).</div></div>
+    <div class="fcard"><h3>🛡️ "Why was I flagged?" explainer</h3><p>Plain-English fraud &amp; risk reasons for merchants.</p><div class="art"><b>Artifact:</b> merchant-facing copy + tone rules.</div></div>
+    <div class="fcard"><h3>💰 Capital offer coach</h3><p>Explains a cash-advance offer + repayment scenarios.</p><div class="art"><b>Artifact:</b> the no-jargon explanation script.</div></div>
+  </div>
+
+  <div class="callout" style="margin-top:30px">💡 <b>Got your own idea?</b> Even better — any small AI feature you'd love at Wix works. The exercise is the Git loop, not the spec.</div>
+
+  <div class="links">
+    <a href="/creators/real">← Back to the drill</a>
+    <a href="/creators/deck">📊 The deck</a>
+    <a href="/creators">🏠 Home</a>
+  </div>
+  <footer>Part of <b>Git Without the Fear · Creators</b> · pick one, one-page it, and PR it.</footer>
+</div>
+</body></html>
