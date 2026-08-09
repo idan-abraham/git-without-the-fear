@@ -1,0 +1,12 @@
+# One GitHub username per line. Blank lines and #-comments are ignored.
+#
+# 1. Copy this file:   cp scripts/usernames.example.txt scripts/usernames.txt
+# 2. Paste your 30–40 participants' GitHub usernames below (not their emails).
+# 3. Run:              ./scripts/invite-collaborators.sh -f scripts/usernames.txt
+#
+# Tip: git-ignore your real list — it's just names, but no need to commit it.
+# (scripts/usernames.txt is already in .gitignore.)
+
+# alice
+# bob-wix
+# carol123

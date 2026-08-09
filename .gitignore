@@ -7,3 +7,5 @@ dist/
 *.log
 .wix/
 package-lock.json
+scripts/usernames.txt
+.claudine/

@@ -104,8 +104,11 @@ and your branch disagree on the **exact same line** — the conflict, set up on 
 
 **3. Pull it in and resolve.**
 ```
-git merge main
+git pull origin main
 ```
+*(Use `git pull origin main`, **not** plain `git merge main` — your local `main` is stale from
+when you branched. This fetches what's on `main` right now and merges it into your branch.)*
+
 Git stops with `CONFLICT (content): Merge conflict in conflict-zone/guestbook.md`. Don't
 panic — run `git status`, open the file, and you'll see the question:
 ```
@@ -129,7 +132,7 @@ choose. *(↳ Level 3.)*
 >
 > 🧑‍💻 **Solo / self-paced?** Play both roles: make a `roster-a` branch, edit the line,
 > merge its PR to `main`. Then on a `roster-b` branch edit the *same* line and
-> `git merge main` — you'll get the identical conflict with only yourself involved.
+> `git pull origin main` — you'll get the identical conflict with only yourself involved.
 
 ---
 
