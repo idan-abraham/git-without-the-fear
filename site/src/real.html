@@ -66,13 +66,13 @@ footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
   </ol>
 
   <h2>🔥 The conflict finale</h2>
-  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict. Here it is on the live repo — real, on purpose, resolved together. (It works because the facilitator owns this repo's <code class="k">main</code>.)</p>
+  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict — and here it's real, on the live repo. By the end you'll have hit a genuine merge conflict and resolved it yourself.</p>
   <div class="callout fire">
-    <b>Everyone, on your branch:</b> open <code class="k">conflict-zone/guestbook.md</code> and change the single line <code class="k">- 🕶️ The instructor was here first.</code> to your own name, then commit + push to your PR.<br><br>
-    <b>Facilitator, once everyone has edited that line:</b> change the <em>same</em> line on <code class="k">main</code> and push. Now <code class="k">main</code> and every branch disagree on the same line — a real conflict, on purpose.<br><br>
-    <b>Everyone, now run <code class="k">git merge main</code>:</b> Git stops with <code class="k">CONFLICT … guestbook.md</code>. Open the file, delete the <code class="k">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code class="k">=======</code> / <code class="k">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers, keep the text you want (both is easiest), then <code class="k">git add</code> → <code class="k">git commit</code> → <code class="k">git push</code>. That's the whole monster.
+    <b>1. Sign the shared line.</b> On your branch, open <code class="k">conflict-zone/guestbook.md</code> and change the single line <code class="k">- 🕶️ The instructor was here first.</code> to your own name. Then <code class="k">git add</code> → <code class="k">git commit</code> → <code class="k">git push</code> to your PR.<br><br>
+    <b>2. Wait for the go-ahead.</b> Your facilitator changes that <em>same</em> line on <code class="k">main</code>. Now <code class="k">main</code> and your branch disagree on the exact same line — the conflict, set up on purpose.<br><br>
+    <b>3. Pull it in and resolve.</b> Run <code class="k">git merge main</code>. Git stops with <code class="k">CONFLICT … guestbook.md</code>. Open the file, delete the <code class="k">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code class="k">=======</code> / <code class="k">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers, keep the text you want (keeping both is easiest), then <code class="k">git add</code> → <code class="k">git commit</code> → <code class="k">git push</code>. That's the whole monster.
   </div>
-  <div class="callout">🧯 <b>Escape hatch:</b> <code class="k">git merge --abort</code> puts everything back exactly as before — nothing lost. &nbsp;·&nbsp; 🧑‍💻 <b>Solo?</b> Play both roles: branch <code class="k">roster-a</code>, edit the line, merge it to <code class="k">main</code>; then on <code class="k">roster-b</code> edit the same line and <code class="k">git merge main</code> — identical conflict, only you.</div>
+  <div class="callout">🧯 <b>Escape hatch:</b> <code class="k">git merge --abort</code> puts everything back exactly as before — nothing lost. &nbsp;·&nbsp; 🧑‍💻 <b>On your own?</b> Play both roles: branch <code class="k">roster-a</code>, edit the line, merge it to <code class="k">main</code>; then on <code class="k">roster-b</code> edit the same line and <code class="k">git merge main</code> — identical conflict, only you.</div>
 
   <h2>What just happened</h2>
   <ul class="plain">
