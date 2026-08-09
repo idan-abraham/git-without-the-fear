@@ -47,11 +47,13 @@ One branch = one piece of work — not two weeks of everything piled together.
 *(↳ Level 4 — one branch, one thing.)*
 
 ### 3. Build something real — commit as you go
-Put a real file in your folder (a note, a checklist, anything that's *yours*):
+**Need a topic?** Pick a Wix AI feature from **[git-without-fear.com/ideas](https://git-without-fear.com/ideas)**
+and write a quick one-pager on it (what it does · who it's for · the key AI prompt or flow).
+Drop it in your folder:
 ```
-echo "# Dana's first real PR" > workshop/dana-first-pr/notes.md
-git add workshop/dana-first-pr/notes.md
-git commit -m "Add Dana's notes"
+echo "# Dana — AI checkout optimizer (one-pager)" > workshop/dana-first-pr/idea.md
+git add workshop/dana-first-pr/idea.md
+git commit -m "Add AI checkout optimizer one-pager"
 ```
 `git add` curates exactly what goes into the snapshot; `git status` and
 `git log --oneline` tell you the truth at any point. *(↳ Level 2 — staging.)*
