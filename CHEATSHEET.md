@@ -15,6 +15,9 @@ git push -u origin my-branch   # send my branch up to GitHub
 ```
 Then open a **Pull Request** on GitHub to propose your change.
 
+> 💡 `git switch -c my-branch` is the modern equivalent of `git checkout -b my-branch`, and
+> `git switch main` of `git checkout main`. Both styles work — use whichever your AI or muscle memory reaches for.
+
 ## Looking around
 ```bash
 git status        # current state — your best friend, run it often
@@ -27,6 +30,14 @@ git diff          # exactly what changed, line by line
 git checkout main     # switch to the main branch
 git pull              # download the latest from GitHub
 ```
+
+## Merging & conflicts
+```bash
+git merge <branch>    # bring another branch's changes into yours
+git merge --abort     # changed your mind — undo the merge, safely
+```
+If Git says `CONFLICT`, two people changed the same line. Open the file, delete the
+`<<<<<<<` / `=======` / `>>>>>>>` markers, keep the text you want, then `git add` + `git commit`. That's the whole thing.
 
 ## "Help, I messed up"
 ```bash

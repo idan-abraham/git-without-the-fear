@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do it for real · Git Without the Fear</title>
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Wix+Madefor+Text:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#116DFF;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#070A10;color:#E6EDF3;font-family:'Wix Madefor Text',system-ui,sans-serif;padding:40px 24px 72px;line-height:1.6}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0%,#000 18%,transparent 70%);pointer-events:none;z-index:0}
+.glow{position:fixed;border-radius:50%;filter:blur(90px);opacity:.34;pointer-events:none}
+.g1{width:560px;height:560px;background:var(--accent);top:-240px;left:-160px}
+.g2{width:480px;height:480px;background:#7C3AED;bottom:-240px;right:-140px}
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:#7AABFF;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13px;margin-bottom:28px}
+.back:hover{color:#A9C6FF}
+.eyebrow{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:12px}
+h1{font-family:'Wix Madefor Display',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-size:clamp(30px,5vw,48px);margin:0;background:linear-gradient(120deg,#fff 30%,#7AABFF 72%,#116DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#9FB0C3;font-size:clamp(15px,2vw,17.5px);max-width:60ch;margin:18px 0 0}
+.lead b{color:#E6EDF3}
+h2{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:22px;color:#fff;margin:44px 0 4px;letter-spacing:-.01em}
+.callout{margin:22px 0;border-radius:14px;padding:15px 18px;font-size:14px;color:#C7CDD6;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12)}
+.callout.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.32)}
+.callout.fire{background:rgba(220,38,38,.09);border-color:rgba(220,38,38,.34)}
+.callout b{color:#fff}
+code.k{font-family:'JetBrains Mono',monospace;font-size:.9em;background:rgba(17,109,255,.15);color:#9FC0FF;border:1px solid rgba(17,109,255,.28);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0 0;display:grid;gap:12px}
+.steps li{counter-increment:s;position:relative;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 20px 18px 62px}
+.steps li::before{content:counter(s);position:absolute;left:16px;top:16px;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(135deg,#116DFF,#7C3AED)}
+.steps h3{font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:15.5px;color:#fff;margin:0 0 4px}
+.steps p{margin:0;color:#9FB0C3;font-size:13.8px}
+.steps .drillmap{display:inline-block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7AABFF;background:rgba(122,171,255,.09);border:1px solid rgba(122,171,255,.24);border-radius:999px;padding:3px 10px}
+.golden{margin:26px 0 0;border-left:3px solid var(--accent);background:rgba(17,109,255,.06);border-radius:0 12px 12px 0;padding:16px 20px;color:#C7CDD6;font-size:14.5px}
+.golden b{color:#fff}
+ul.plain{color:#9FB0C3;font-size:14.5px;padding-left:20px}
+ul.plain li{margin:8px 0}
+ul.plain b{color:#E6EDF3}
+.links{margin-top:40px;display:flex;gap:12px;flex-wrap:wrap}
+.links a{text-decoration:none;font-family:'Wix Madefor Display',sans-serif;font-weight:800;font-size:13.5px;color:#E6EDF3;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:11px 16px;transition:border-color .18s,background .18s}
+.links a:hover{border-color:rgba(122,171,255,.5);background:rgba(122,171,255,.08)}
+footer{margin-top:52px;color:#5B6B80;font-size:12.5px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+footer code{font-family:'JetBrains Mono',monospace;color:#9FB0C3}
+</style></head>
+<body>
+<div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
+<div class="wrap">
+  <a class="back" href="/">🏠 Home</a>
+  <div class="eyebrow">The graduation · Drill 6</div>
+  <h1>Do it for real 🚀</h1>
+  <p class="lead">Every level in the Quest was practice in a safe sandbox. This is the <b>same loop</b> — branch, commit, push, PR, resolve a conflict — now on a <b>real GitHub repo, by hand</b>. Nothing simulated. You finish with a <b>live Pull Request that has your name on it</b>, and a <b>real merge conflict</b> you resolved yourself.</p>
+
+  <div class="callout">💡 <b>The one idea:</b> the same six moves from the Quest, now with real stakes. At Wix, tooling like <b>Creator Kit</b> (<code class="k">/ck-new</code>, <code class="k">/ck-utility-pr</code>, <code class="k">/ck-utility-sync</code>) runs these exact git steps for you. You're about to do them by hand — so you'll <em>recognise</em> what that tooling does, instead of trusting it blindly.</div>
+
+  <div class="callout warn">🔧 <b>Prerequisites (~5 min):</b> <code class="k">git</code> installed, a GitHub account, and the workshop repo cloned with collaborator access — send the facilitator your GitHub username, or use the <b>Fork</b> fallback. <code class="k">gh</code> (GitHub CLI) is handy but optional; you can always open the PR in the browser.</div>
+
+  <h2>The loop</h2>
+  <ol class="steps">
+    <li><h3>Get current — clean slate</h3><p>In your clone: <code class="k">git checkout main</code> then <code class="k">git pull</code>. <code class="k">main</code> is one shared line of work — start clean, every time. The single most-skipped step.</p><span class="drillmap">↳ Level 1 · a branch is not a folder</span></li>
+    <li><h3>Start your piece — one branch, one thing</h3><p>Name a branch for you + one small topic: <code class="k">git switch -c dana-first-pr</code> (<code class="k">git checkout -b</code> works too). Make your own folder <code class="k">workshop/dana-first-pr/</code> so 20 people work at once without colliding.</p><span class="drillmap">↳ Level 4 · one branch, one thing</span></li>
+    <li><h3>Build something real — commit as you go</h3><p><b>Need a topic?</b> <a href="/ideas" style="color:#7AABFF;font-weight:700;text-decoration:none">Pick a Wix AI feature →</a> and write a quick one-pager in your folder. Then <code class="k">git add &lt;file&gt;</code> and <code class="k">git commit -m "…"</code>. <code class="k">git add</code> curates exactly what goes in; <code class="k">git status</code> tells the truth any time.</p><span class="drillmap">↳ Level 2 · staging</span></li>
+    <li><h3>Draft PR early — back it up now</h3><p>Don't wait until you're "done": <code class="k">git push -u origin dana-first-pr</code>, then <code class="k">gh pr create --draft</code> (or open the link <code class="k">git push</code> prints). The moment it exists, your work lives on GitHub — not just your laptop.</p><span class="drillmap">↳ Level 4 · the way out</span></li>
+    <li><h3>Keep going — push to the same PR</h3><p>Change something, then <code class="k">git commit</code> + <code class="k">git push</code>. Reload the PR: the new commit is already there. No second PR, no lost work — the PR updates itself.</p></li>
+    <li><h3>The conversation — a PR is a comment thread</h3><p>Pair up. Comment on a neighbour's PR line. When one lands on yours, answer it <b>with another commit</b> (<code class="k">git commit</code> → <code class="k">git push</code>). The ask, your fix, and the resolution stay on the change forever.</p><span class="drillmap">↳ Level 5 · a PR is a conversation</span></li>
+  </ol>
+
+  <h2>🔥 The conflict finale</h2>
+  <p class="lead" style="margin-top:8px">The scariest level was the pull conflict. Here it is on the live repo — real, on purpose, resolved together. (It works because the facilitator owns this repo's <code class="k">main</code>.)</p>
+  <div class="callout fire">
+    <b>Everyone, on your branch:</b> open <code class="k">conflict-zone/guestbook.md</code> and change the single line <code class="k">- 🕶️ The instructor was here first.</code> to your own name, then commit + push to your PR.<br><br>
+    <b>Facilitator, once everyone has edited that line:</b> change the <em>same</em> line on <code class="k">main</code> and push. Now <code class="k">main</code> and every branch disagree on the same line — a real conflict, on purpose.<br><br>
+    <b>Everyone, now run <code class="k">git merge main</code>:</b> Git stops with <code class="k">CONFLICT … guestbook.md</code>. Open the file, delete the <code class="k">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code class="k">=======</code> / <code class="k">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers, keep the text you want (both is easiest), then <code class="k">git add</code> → <code class="k">git commit</code> → <code class="k">git push</code>. That's the whole monster.
+  </div>
+  <div class="callout">🧯 <b>Escape hatch:</b> <code class="k">git merge --abort</code> puts everything back exactly as before — nothing lost. &nbsp;·&nbsp; 🧑‍💻 <b>Solo?</b> Play both roles: branch <code class="k">roster-a</code>, edit the line, merge it to <code class="k">main</code>; then on <code class="k">roster-b</code> edit the same line and <code class="k">git merge main</code> — identical conflict, only you.</div>
+
+  <h2>What just happened</h2>
+  <ul class="plain">
+    <li>The daily loop is exactly the Quest loop: <b>get current → branch → build → draft PR → push more → resolve → merge.</b> Same six moves, real stakes.</li>
+    <li>You ran every git step <b>by hand</b> — so when Wix tooling like Creator Kit does it for you, you'll recognise the gears instead of fearing them.</li>
+    <li>A draft PR from commit one means your work is backed up and shareable the whole time — never trapped on one laptop.</li>
+    <li>A PR is a conversation bolted to the actual change. You're already fluent in that.</li>
+  </ul>
+
+  <div class="golden"><b>🧹 When it's merged:</b> click GitHub's "Delete branch", then <code class="k">git checkout main &amp;&amp; git pull</code> for whatever's next.</div>
+
+  <div class="links">
+    <a href="https://github.com/idan-abraham/git-without-the-fear/pulls" target="_blank" rel="noopener">🌿 See the open PRs →</a>
+    <a href="/play">🎮 Back to the Quest</a>
+  </div>
+
+  <footer>Part of <b>Git Without the Fear</b> · the workshop repo lives at <code>git-without-the-fear</code>.</footer>
+</div>
+</body></html>

@@ -5,7 +5,8 @@ change to the same line, Git can't decide who wins — so it asks *you*. That's 
 **merge conflict**, and it's the thing everyone fears most and understands least.
 
 ## How to trigger and resolve one (we'll do this together)
-1. On your branch, edit the line marked `SIGN HERE` — add your name.
+1. On your branch, change the single **SIGN HERE** line below (`- 🕶️ The instructor was here first.`)
+   to your own name. Everyone edits the *same* line — that's exactly what creates the conflict.
 2. Commit and push, open your PR.
 3. If someone merged before you touched the same line, GitHub will say
    *"This branch has conflicts that must be resolved."*
@@ -25,6 +26,6 @@ politely asking a human to sort it out.
 
 ---
 
-## Guestbook — SIGN HERE (add a new line with your name)
+## Guestbook — SIGN HERE (everyone changes the SAME line below to their own name)
 
 - 🕶️ The instructor was here first.
